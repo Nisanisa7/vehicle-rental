@@ -1,0 +1,16 @@
+import React from 'react'
+import styled from 'styled-components'
+
+export const Dropdown = (props) => {
+    return (
+        <Styles>
+            <select classNsme="custom-select" className={props.className} name={props.name} id="inputGroupSelect01">
+                  <option value={props.value}>{props.option}</option>
+              </select>
+        </Styles>
+    )
+}
+const Styles = styled.div`
+
+
+`
