@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Flickity from 'react-flickity-component'
 import styled from 'styled-components'
-import Navbar_Bf_Login from '../../components/navbar_bf_login'
+import Navbar_after_login from '../../../components/molecules/navbar_after_login'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css"
 import "swiper/components/thumbs/thumbs.min.css"
-
+import router, { useRouter } from 'next/router'
 // import "./styles.css";
 
 
@@ -18,24 +18,34 @@ import "swiper/components/thumbs/thumbs.min.css"
 import SwiperCore, {
   Navigation,Thumbs
 } from 'swiper/core';
-import Footer from "../../components/footer";
+import Footer from "../../../components/molecules/footer";
+import axios from "axios";
+import Vehicle_type_admin from "../vehicle_type_admin";
 
 
 // install Swiper modules
 SwiperCore.use([Navigation,Thumbs]);
 
-
-const Detail_vehicle = () => {
+const Detail_vehicle = ({detail}) => {
+    
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const[count, setCount] = useState(1);
-    return (
+    const[stock, setCount] = useState(1);
+
+    const handleBack = () =>{
+        router.push('/adminPage/vehicle_type_admin')
+    }
+    const handleEdit = () =>{
+        router.push(`/adminPage/edit/${detail.idvehicle}`)
+    }
+    return (   
         <Styles>
-            <Navbar_Bf_Login/>
+            <p>{JSON.stringify(detail)}</p>
+            <Navbar_after_login/>
         <div className="container">
 
             <div className="back-wrapper">
-                <button type="submit" class="backButton">
-                    <i class="fa fa-chevron-left fa-3x"></i>
+                <button onClick={handleBack} type="submit" className="backButton">
+                    <i className="fa fa-chevron-left fa-3x"></i>
                     <p>Detail</p>
                 </button>
             </div>
@@ -48,7 +58,7 @@ const Detail_vehicle = () => {
                         navigation={true} 
                         thumbs={{ swiper: thumbsSwiper }} 
                         className="mySwiper2">
-                        <SwiperSlide><img src="/bike.png" /></SwiperSlide>
+                        <SwiperSlide><img src={detail.image} /></SwiperSlide>
                         <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-2.jpg" /></SwiperSlide>
                         <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-3.jpg" /></SwiperSlide>
                         
@@ -59,7 +69,7 @@ const Detail_vehicle = () => {
                         slidesPerView={3} 
                         freeMode={true} 
                         className="mySwiper">
-                    <SwiperSlide><img src="/bike.png" /></SwiperSlide>
+                    <SwiperSlide><img src={detail.image} /></SwiperSlide>
                     <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-2.jpg" /></SwiperSlide>
                     <SwiperSlide><img src="https://swiperjs.com/demos/images/nature-3.jpg" /></SwiperSlide>
                     
@@ -67,26 +77,25 @@ const Detail_vehicle = () => {
                     </Swiper>
                 </div>
                 <div className="detail-product">
-                    <h1 className="title-name">Fixie-Gray Only</h1>
-                    <h3 className="town-title">Yogyakarta</h3>
-                    <h6 className="status-title">Available</h6>
-                    <h5 className="title">No Repayment</h5>
+                    <h1 className="title-name">{detail.vehicle_name}</h1>
+                    <h3 className="town-title">{detail.location}</h3>
+                    <h6 className="status-title">{detail.status}</h6>
                     <div className="item-detail">
-                            <span>Capacity : 1 person</span> <br />
-                            <span>Type : Bike</span> <br />
+                            <span>{detail.description}</span> <br />
+                            <span>Type : {detail.id}</span> <br />
                             <span>Reservation Before 2 PM</span> 
                     </div>
-                    <h2 className="price">Rp. 78.000/day</h2>
+                    <h2 className="price">Rp. {detail.price}/day</h2>
 
                 <div className="button-wrapper">
-                    <button className="button-min" onClick={()=>setCount(count-1)}>
-                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    <button className="button-min" onClick={()=>setCount(stock-1)}>
+                        <i className="fa fa-minus" aria-hidden="true"></i>
                     </button>
 
-                    <span className="counter">{count}</span>
+                    <span className="counter">{detail.stock}</span>
 
-                    <button className="button-plus" onClick={()=>setCount(count+1)} >
-                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    <button className="button-plus" onClick={()=>setCount(stock+1)} >
+                        <i className="fa fa-plus" aria-hidden="true"></i>
                     </button>
 
                 </div>
@@ -94,26 +103,29 @@ const Detail_vehicle = () => {
             </div>
             <div className="button-content">
                 <button type="submit" className="btn-chat">
-                    Chat Admin
+                    Add to home page
                 </button>
-                <button type="submit" className="btn-reservation">
-                    Reservation
-                </button>
-                <button type="submit" className="btn-like">
-                    <i className="fa fa-heart fa-2x" aria-hidden="true">
-                    <label>Like</label>
-                    </i>
-                    
+                <button type="submit" className="btn-reservation" onClick={handleEdit}>
+                    Edit item
                 </button>
             </div>
         </div>
         <Footer className="footer"/>
      
         </Styles>
+        
     )
 }
+export const getServerSideProps = async(context) => {
+    const {id} = context.query;
+    const {data} = await axios.get(`http://localhost:4000/v1/vehicle/${id}`)
+    return{
+        props:{
 
-
+            detail : data.data[0]
+        }
+    }
+}
 
 export default Detail_vehicle
 const Styles = styled.div`
@@ -137,26 +149,7 @@ const Styles = styled.div`
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            /* .first-section{
-                width: 60px;
-                background: tomato;
-            }
-            .sec-section{
-                width: 150px;
-                background: tomato;
-            }
-            .forth-section{
-                width: 150px;
-                background: tomato;
-            }
-            .forth-section  .sec-section img{
-                width: 233px;
-                height: 158px;
-            }
-            .third-section{
-                width: 60px;
-                background: tomato;
-            } */
+
         }
     }
     .detail-product{
@@ -188,7 +181,7 @@ const Styles = styled.div`
             line-height: 25px;
             color: #087E0D;
         }
-        .title{
+        /* .title{
             margin-top: 15px;
             font-family: 'Nunito';
             font-style: normal;
@@ -196,7 +189,7 @@ const Styles = styled.div`
             font-size: 28px;
             line-height: 24px;
             color: #9B0A0A;
-        }
+        } */
         .item-detail{
             margin-top: 25px;
         }
@@ -273,7 +266,7 @@ const Styles = styled.div`
     }
     .btn-reservation{
         margin-left: 35px;
-        width: 400px;
+        width: 450px;
         height:69px;
         background: #FFCD61;
         border-radius: 10px;
@@ -286,25 +279,7 @@ const Styles = styled.div`
         font-size: 20px;
         line-height: 25px;
     }
-    .btn-like{
-        margin-left: 35px;
-        width: 225px;
-        height: 69px;   
-        background: #393939;
-        border-radius: 10px;
-        border: 1px solid #393939;
-        .fa{
-            color: #FFCD61;
-        }
-    }
-    .btn-like label{
-        padding-left: 10px;
-        color: #FFCD61;
-        font-family: 'Nunito';
-        font-style: normal;
-        font-weight: bold;
-        font-size: 25px;
-    }
+
 }
 .back-wrapper{
         .backButton{

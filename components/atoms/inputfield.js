@@ -20,6 +20,7 @@ const Inputfield = ({className, label, name, value, onChange, type, defaultValue
 
 export default Inputfield
 const Styles = styled.div`
+
 .input{
     width: 100%;
 }

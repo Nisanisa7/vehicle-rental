@@ -35,8 +35,10 @@ const Styles = styled.div`
     &.dark{
         background-color: #393939;
         color: #FFCD61;
-    }&.dark:hover{
+    }
+    &.dark:hover{
         background-color: #2e2d2d;
     }
+    
 }
 `

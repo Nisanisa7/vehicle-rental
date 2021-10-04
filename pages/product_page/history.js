@@ -22,21 +22,21 @@ const History = () => {
 
                 
                 <div className="main-content">
-                    <div class="search">
-                        <input type="text" class="searchTerm" name="" placeholder="Search History"/>
-                        <button type="submit" class="searchButton">
-                            <i class="fa fa-search fa-2x"></i>
+                    <div className="search">
+                        <input type="text" className="searchTerm" name="" placeholder="Search History"/>
+                        <button type="submit" className="searchButton">
+                            <i className="fa fa-search fa-2x"></i>
                         </button>
                     </div>
-                    <div class="select" tabindex="1">
-                        <input class="selectopt" name="test" type="radio" id="opt1" checked/>
-                        <label for="opt1" class="option">Types</label>
-                        <input class="selectopt" name="test" type="radio" id="opt2"/>
-                        <label for="opt2" class="option">Date Added</label>
-                        <input class="selectopt" name="test" type="radio" id="opt3"/>
-                        <label for="opt3" class="option">Name</label>
-                        <input class="selectopt" name="test" type="radio" id="opt4"/>
-                        <label for="opt4" class="option">Favorite Product</label>
+                    <div className="select" tabindex="1">
+                        <input className="selectopt" name="test" type="radio" id="opt1" checked/>
+                        <label for="opt1" className="option">Types</label>
+                        <input className="selectopt" name="test" type="radio" id="opt2"/>
+                        <label for="opt2" className="option">Date Added</label>
+                        <input className="selectopt" name="test" type="radio" id="opt3"/>
+                        <label for="opt3" className="option">Name</label>
+                        <input className="selectopt" name="test" type="radio" id="opt4"/>
+                        <label for="opt4" className="option">Favorite Product</label>
                     </div>
                     <h6>Today</h6>
                         <CardHistory

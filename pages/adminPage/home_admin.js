@@ -1,8 +1,8 @@
 
 import styled from "styled-components";
 import Card_Item from "../../components/card_item";
-import Navbar_Bf_Login from "../../components/navbar_bf_login";
-import { Layout } from "../../components/layout";
+import Navbar_Bf_Login from "../../components/molecules/navbar_bf_login";
+import { Layout } from "../../components/molecules/layout";
 import Link from "next/link";
 // import Footer from "../components/footer";
 import Image from "next/dist/client/image";
@@ -25,7 +25,7 @@ export default function Home_admin() {
                 <div className="dropdown">
                   <div className="first-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -35,7 +35,7 @@ export default function Home_admin() {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -47,7 +47,7 @@ export default function Home_admin() {
                   </div>
                   <div className="second-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -57,7 +57,7 @@ export default function Home_admin() {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -187,6 +187,7 @@ const Styles = styled.div`
           margin-top: 48px;
           display: flex;
           flex-direction: column;
+          visibility: hidden;
           select {
             width: 220px;
             padding-left: 10px;
@@ -218,7 +219,7 @@ const Styles = styled.div`
           background: #ffcd61;
           border-radius: 8px;
           cursor: pointer;
-
+          visibility: hidden;
           font-family: "Nunito";
           font-style: normal;
           font-weight: 900;

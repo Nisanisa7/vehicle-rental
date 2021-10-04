@@ -1,169 +1,85 @@
+import axios from "axios";
 import Link from "next/link";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Card_Item from "../../components/card_item";
-import Navbar_after_login from "../../components/navbar_after_login";
+import Card_ItemAdmin from "../../components/card_itemAdmin";
+import { Layout } from "../../components/molecules/layout";
+import Navbar_after_login from "../../components/molecules/navbar_after_login";
 
 const Vehicle_type_admin = () => {
+  const [category, setCategory] = useState([])
+  const [search, setSearch] = useState("")
+  useEffect(() => {
+      axios.get("http://localhost:4000/v1/vehicle")
+        .then((data)=>{
+          setCategory(data.data.item)
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+  }, [])
   return (
     <Styles>
       <Navbar_after_login />
+      <Layout title="Rental Kendaraan"/>
       <div className="container">
-        <div class="search">
+        <div className="search">
           <input
             type="text"
-            class="searchTerm"
+            className="searchTerm"
             name=""
             placeholder="Search vehicle (ex. cars, cars name)"
-          />
-          <button type="submit" class="searchButton">
-            <i class="fa fa-search fa-2x"></i>
+            onChange={(e)=>{
+              setSearch(e.target.value)
+            }}
+         />
+          <button type="submit" className="searchButton">
+            <i className="fa fa-search fa-2x"></i>
           </button>
         </div>
       </div>
 
+    
+
       <div className="container submenu">
-        <div className="d-flex justify-content-between">
-          <h1>Popular in town</h1>
-          <Link href="">
-            <a className="view">
-              View all <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </a>
-          </Link>
-        </div>
+      
       </div>
 
       <div className="container submenu">
-        <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/Van.png"
-              className="card"
-              location="Merapi"
-              city="Yogyakarya"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/orang ngetrek.png"
-              className="card"
-              location="Teluk Bogam"
-              city="Kalimantan"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/ceue naik mobil.png"
-              className="card"
-              location="Bromo"
-              city="Malang"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/boncengan.png"
-              className="card"
-              location="Malioboro"
-              city="Yogyakarya"
-            ></Card_Item>
-          </div>
-        </div>
-      </div>
-      <div className="container submenu">
-        <div className="d-flex justify-content-between">
-          <h1>Cars</h1>
+      <div className="row">
+        {category.filter((item)=>{
+          if(search == ""){
+            return item
+          } else if(item.vehicle_name.toLowerCase().includes(search.toLocaleLowerCase())){
+            return item
+          }
+        }).map((item, index)=>(
+          <>
+          {item.name !== category[index-1]?.name && 
+          (<div className="d-flex justify-content-between">
+          <h1>{item.name}</h1>
           <Link href="">
             <a className="view">
-              View all <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              View all <i className="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
           </Link>
-        </div>
-      </div>
-
-      <div className="container submenu">
-        <div className="row">
+        </div>)}
+        
+          
           <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/Van.png"
-              className="card"
-              location="Merapi"
-              city="Yogyakarya"
-            ></Card_Item>
+            <Card_ItemAdmin
+              id={item.idvehicle}
+              src={item.image}
+              className="card1 card-map"
+              location={item.location}
+              city={item.vehicle_name}
+              ></Card_ItemAdmin>
           </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/orang ngetrek.png"
-              className="card"
-              location="Teluk Bogam"
-              city="Kalimantan"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/ceue naik mobil.png"
-              className="card"
-              location="Bromo"
-              city="Malang"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/boncengan.png"
-              className="card"
-              location="Malioboro"
-              city="Yogyakarya"
-            ></Card_Item>
-          </div>
-        </div>
+        </>
+        ))}
+        </div> 
       </div>     
-       
-      <div className="container submenu">
-        <div className="d-flex justify-content-between">
-          <h1>Motorbike</h1>
-          <Link href="">
-            <a className="view">
-              View all <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </a>
-          </Link>
-        </div>
-      </div>
-
-      <div className="container submenu">
-        <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/Van.png"
-              className="card"
-              location="Merapi"
-              city="Yogyakarya"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/orang ngetrek.png"
-              className="card"
-              location="Teluk Bogam"
-              city="Kalimantan"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/ceue naik mobil.png"
-              className="card"
-              location="Bromo"
-              city="Malang"
-            ></Card_Item>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-3">
-            <Card_Item
-              src="/boncengan.png"
-              className="card"
-              location="Malioboro"
-              city="Yogyakarya"
-            ></Card_Item>
-          </div>
-        </div>
-      </div>
        
      
     </Styles>
@@ -226,6 +142,14 @@ const Styles = styled.div`
       color: #fb8f1d;
       mix-blend-mode: normal;
     }
+    .card1 {
+    padding: 30px;
+    width: 284px;
+    height: 337px;
+    }
+    .card-map{
+
+  }
   }
   .card-content {
     display: flex;
@@ -236,5 +160,8 @@ const Styles = styled.div`
       width: 284px;
       height: 337px;
     }
+    .card-map{
+      width: 23%;
+  }
   }
 `;

@@ -25,7 +25,7 @@ export default function Home() {
                 <div className="dropdown">
                   <div className="first-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -35,7 +35,7 @@ export default function Home() {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -47,7 +47,7 @@ export default function Home() {
                   </div>
                   <div className="second-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -57,7 +57,7 @@ export default function Home() {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -220,6 +220,7 @@ const Styles = styled.div`
           margin-top: 48px;
           display: flex;
           flex-direction: column;
+          visibility: hidden;
           select {
             width: 220px;
             padding-left: 10px;
@@ -251,7 +252,7 @@ const Styles = styled.div`
           background: #ffcd61;
           border-radius: 8px;
           cursor: pointer;
-
+          visibility: hidden;
           font-family: "Nunito";
           font-style: normal;
           font-weight: 900;

@@ -8,7 +8,7 @@ const CardHistory = ({className, content, path}) => {
             <p>{content}</p>
             <Link href="">
                 <a className="icon">
-                    <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+                    <i className="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
                 </a>
           </Link>
         </Styles>

@@ -6,6 +6,7 @@ import Navbar_after_login from "../../components/navbar_after_login";
 
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
+    const [search, setSearch] = useState("")
     useEffect(async() => {
       const result = await axios('http://localhost:4000/v1/vehicle')
       setVehicle(result.data)

@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import { Layout } from '../../components/layout'
+import { Layout } from '../../components/molecules/layout'
 import Link from 'next/link'
 import Card from '../../components/card'
 // import Footer from '../../components/footer'
-import Navbar_after_login from '../../components/navbar_after_login'
+import Navbar_after_login from '../../components/molecules/navbar_after_login'
 import { useRouter } from 'next/dist/client/router'
 
 const HomeAfterLogin = () => {
@@ -30,7 +30,7 @@ const HomeAfterLogin = () => {
                 <div className="dropdown">
                   <div className="first-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -40,7 +40,7 @@ const HomeAfterLogin = () => {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -52,7 +52,7 @@ const HomeAfterLogin = () => {
                   </div>
                   <div className="second-section">
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -62,7 +62,7 @@ const HomeAfterLogin = () => {
                       <option value="value">Location</option>
                     </select>
                     <select
-                      classNsme="custom-select"
+                      className="custom-select"
                       name=""
                       id="inputGroupSelect01"
                     >
@@ -193,6 +193,7 @@ const Styles = styled.div`
           margin-top: 48px;
           display: flex;
           flex-direction: column;
+          visibility: hidden;
           select {
             width: 220px;
             padding-left: 10px;
@@ -224,7 +225,7 @@ const Styles = styled.div`
           background: #ffcd61;
           border-radius: 8px;
           cursor: pointer;
-
+          visibility: hidden;
           font-family: "Nunito";
           font-style: normal;
           font-weight: 900;

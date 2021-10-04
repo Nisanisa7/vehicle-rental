@@ -10,8 +10,8 @@ const Forgotpassword = () => {
             <div className="wrapper">
                 <div className="container">
                 <div className="back-wrapper">
-                    <button type="submit" class="backButton">
-                        <i class="fa fa-chevron-left fa-3x"></i>
+                    <button type="submit" className="backButton">
+                        <i className="fa fa-chevron-left fa-3x"></i>
                         <p>Back</p>
                     </button>
                 </div>

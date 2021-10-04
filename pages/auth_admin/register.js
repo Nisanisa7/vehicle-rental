@@ -1,61 +1,52 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { Button } from "../../components/atoms/button";
+import { TransparantField } from "../../components/atoms/transparantField";
 import { Layout } from "../../components/molecules/layout";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { RegisterCustommer } from "../../Redux/Action/CustommerActions";
-import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2'
+import axios from "axios";
 const Register = () => {
-  const router = useRouter();
-  // const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const dispatch = useDispatch();
-  // const onSubmit = (data, e) =>{
-  //   e.preventDefault()
-  //   axios.post('http://localhost:4000/v1/authcust/register', data)
-  //   .then((res)=>{
-  //     console.log(res);
-  //     alert('success | check your email to activate your account')
-  //     // Swal.fire(
-  //     //   'Register Success!',
-  //     //   'Check your email to activate your account!',
-  //     //   'success'
-  //     // )
-  //   })
-  //   .catch((err)=>{
-  //     console.log(err);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Oops...',
-  //       text: 'Something went wrong!',
-  //     })
-  //   })
-  // }
+  const router = useRouter()
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+  const onSubmit = (data, e) =>{
+    e.preventDefault()
+    axios.post('http://localhost:4000/v1/authadmin/register', data)
+    .then((res)=>{
+      console.log(res);
+      alert('success | check your email to activate your account')
+      // Swal.fire(
+      //   'Register Success!',
+      //   'Check your email to activate your account!',
+      //   'success'
+      // )
+    })
+    .catch((err)=>{
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    })
+  }
   const handlePushLogin = () =>{
 
     router.push('/auth_user')
   }
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-      dispatch(RegisterCustommer(values, router))
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("name is required"),
-      email: Yup.string()
-        .required("Email is required")
-        .email("Email is invalid"),
-      password: Yup.string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters"),
-    }),
-  });
+  // const [form, setForm] = useState({
+  //   'name' :'',
+  //   'email' :'',
+  //   'password': ''
+  // })
+  // const handleChange = (e) =>{
+  //   setForm({
+  //     ...form,
+  //     [e.target.name] : e.target.value
+  // })
+  // }
   return (
     <Styles>
       <Layout title="Register" />
@@ -70,58 +61,45 @@ const Register = () => {
             <div className="right-side">
               <div className="form">
                 <h1 className="title">Sign Up</h1>
-                <form onSubmit={formik.handleSubmit}>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    className={formik.errors.name ? 'errorborder ' :"input"}
-                  />
-                  {formik.errors.name && formik.touched.name && (
-                    <p className="errors">{formik.errors.name}</p>
-                  )}
-                  <input
-                    className={formik.errors.name ? 'errorborder field' :"field input"}
-                    type="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    name="email"
-                    placeholder="Email"
-                  />
-                  {formik.errors.email && formik.touched.email && (
-                    <p className="errors">{formik.errors.email}</p>
-                  )}
-                  <input
-                    className={formik.errors.password ? 'errorborder field' :"field input"}
-                    type="password"
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    placeholder="Password"
-                  />
-                  {formik.errors.password && formik.touched.password && (
-                    <p className="errors">{formik.errors.password}</p>
-                  )}
-                  <Button className="btn-sign" color="shine" type="submit">
-                    Sign Up
-                  </Button>
-                  <h6>or try another way</h6>
-                  <Button className="btn-google" type="" onClick="">
-                    <span>
-                      <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
-                    </span>
-                    Signup Using Google
-                  </Button>
-                  <Button
-                    className="btn-login"
-                    color="dark"
-                    type=""
-                    onClick={handlePushLogin}
-                  >
-                    Login
-                  </Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <input type="text" 
+               placeholder="Name"
+                {...register("name", { required: true})}/>
+                 {errors.password && <span>Name is required</span>}
+                <input
+                  type="text"
+  
+                  placeholder="Email"
+                  className="field"
+                  {...register("email", { required: true ,pattern: /^\S+@\S+$/i})}
+
+                />
+                 {errors.password && <span>Email is required</span>}
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="field"
+                  {...register("password", { required: true})}
+                />
+                 {errors.password && <span>Password is required</span>}
+                <Button
+                  className="btn-sign"
+                  color="shine"
+                  type="submit"
+                  
+                >
+                  Sign Up
+                </Button>
+                <h6>or try another way</h6>
+                <Button className="btn-google" type="" onClick="">
+                  <span>
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+                  </span>
+                  Signup Using Google
+                </Button>
+                <Button className="btn-login" color="dark" type="" onClick={handlePushLogin}>
+                  Login
+                </Button>
                 </form>
               </div>
               <div className="footer">
@@ -170,7 +148,7 @@ export default Register;
 const Styles = styled.div`
   .main-wrapper {
     .row-wrap {
-      /* width: 100vw;
+        /* width: 100vw;
         height: 100vh; */
       .col-7 {
         @media screen and (max-width: 600px) {
@@ -208,7 +186,7 @@ const Styles = styled.div`
                 line-height: 65px;
               }
             }
-            .input {
+            input {
               width: 447px;
               height: 79px;
               background: rgba(218, 218, 218, 0.28);
@@ -222,10 +200,10 @@ const Styles = styled.div`
                 height: 51px;
               }
             }
-            .field {
+            .field{
               margin-top: 33px;
             }
-            span {
+            span{
               color: red;
             }
             .btn-sign {
@@ -259,6 +237,7 @@ const Styles = styled.div`
               @media screen and (max-width: 600px) {
                 font-size: 15px;
                 margin-left: 10px;
+            
               }
             }
             h6:before,
@@ -270,6 +249,7 @@ const Styles = styled.div`
               position: relative;
               top: 0.5em;
               @media screen and (max-width: 600px) {
+               
               }
             }
 
@@ -380,9 +360,4 @@ const Styles = styled.div`
       }
     }
   }
-  .errors{
-  width: 90%;
-  color: red;
-  font-size: 18px;
-  } 
 `;

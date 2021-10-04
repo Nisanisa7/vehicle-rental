@@ -1,47 +1,103 @@
 import { TextField } from '@material-ui/core'
+import axios from 'axios'
 import React from 'react'
 import styled from 'styled-components'
-import Footer from '../../components/footer'
-import Inputfield from '../../components/inputfield'
-import Navbar_Bf_Login from '../../components/navbar_bf_login'
+import Footer from '../../components/molecules/footer'
+import Inputfield from '../../components/atoms/inputfield'
+// import Navbar_Bf_Login from '../../components/molecules/navbar_bf_login'
+// import router from 'next/router'
+import router, { useRouter } from 'next/router'
+import Navbar_after_login from '../../components/molecules/navbar_after_login'
+import { useState } from 'react'
+import Swal from 'sweetalert2'
 
-const Profile = () => {
+const Profile = ({custommer}) => {
+    const [form, setForm] = useState({
+        // email : custommer.email,
+        'address': '',
+        'phone_number': '',
+        'display_name': '',
+        'datebirth' : '',
+        'image': "",
+        "imagePreview": null,
+    })
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name] : e.target.value
+        })
+    }
+    //
+    const handleCancel = () =>{
+        router.push('/adminPage/homeAfterLogin')
+    }
+    const formData = new FormData();
+
+    formData.append('email', form.email);
+    formData.append('address', form.address);
+    formData.append('phone_number', form.phone_number);
+    formData.append('display_name', form.display_name);
+    formData.append('datebirth', form.datebirth);
+    formData.append('image', form.image);
+
+    const handleUpdate= () =>{
+        e.preventDefault()
+        axios.post('', formData)
+        .then((res)=>{
+
+        })
+        .catch((err)=>{
+            Swal.fire({
+                icon: 'error',
+                title: 'Oof',
+                text: 'Something wrong! try again!',
+              })
+        })
+    }
+    const handleShowImage = (e) => {
+        setForm({
+            ...form,
+            image: e.target.files[0],
+            imagePreview: URL.createObjectURL(e.target.files[0]),
+        });
+    };
     return (
         <Styles>
+            <p>{JSON.stringify(custommer)}</p>
             {/* <Inputfield label="Email Address"/> */}
-            <Navbar_Bf_Login/>
+            <Navbar_after_login/>
             <div className="container">
             <h1>Profile</h1>
                 <div className="profile-group">
                         <div className="profile-wrapper">
-                            <img className="images" src="/lady di.jpg" alt="" />
+                            <img className="images" src={form.imagePreview} alt="" />
                             
                             <div className="profile-btn">            
-                                <input id="upload" type="file"/>
-                                <label class="button" for="upload">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <input id="upload" type="file" onChange={handleShowImage}/>
+                                <label className="button" for="upload">
+                                <i className="fa fa-pencil" aria-hidden="true"></i>
                                 </label>
                                 {/* <button>
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i className="fa fa-pencil" aria-hidden="true"></i>
                                 </button> */}
                             </div>
                         </div>
-                        <h1 className="username">Alcina</h1>
+                        <h1 className="username">Name</h1>
                         <div className="text-wrap">
-                            <h6>alcinadimitrescu@gmail.com</h6>
-                            <h6>+6289389123</h6>
-                            <h6>Has been active since 2019</h6>
+                            <h6>Email</h6>
+                            <h6>08xxxxx</h6>
+                            <h6>Has been active since ?</h6>
                         </div>
                         <div className="radio-button-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                                <label class="form-check-label" for="flexRadioDefault1">
+                            <div className="form-check">
+                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <label className="form-check-label" for="flexRadioDefault1">
                                     Male
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-                                <label class="form-check-label" for="flexRadioDefault2">
+                            <div className="form-check">
+                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
+                                <label className="form-check-label" for="flexRadioDefault2">
                                     Female
                                 </label>
                             </div>
@@ -52,25 +108,22 @@ const Profile = () => {
                     className="input"
                     label="Email Address"
                     type="email"
-                    value=""
                     name="email"
-                    onChange=""
+                    onChange={handleChange}
                     />
                     <Inputfield
                     className="input"
                     label="Address"
                     type="text"
-                    value=""
                     name="address"
-                    onChange=""
+                    onChange={handleChange}
                     />
                     <Inputfield
                     className="input"
                     label="Mobile Number"
                     type="text"
-                    value=""
                     name="phone_number"
-                    onChange=""
+                    onChange={handleChange}
                     />
             <h2>Identity</h2>
             <div className="identity-group">
@@ -80,9 +133,8 @@ const Profile = () => {
                     className="input-name"
                     label="Display Name"
                     type="text"
-                    value=""
                     name="display_name"
-                    onChange=""
+                    onChange={handleChange}
                     />
                 </div>
                 <div className="identity-date">
@@ -91,7 +143,7 @@ const Profile = () => {
                     className="input-date"
                     type="date"
                     name="datebirth"
-                    onChange=""
+                    onChange={handleChange}
                     defaultValue="2017-05-24T10:30"
                     label="date"
                     />
@@ -99,14 +151,14 @@ const Profile = () => {
             </div>
             <div className="container">
                 <div className="row sub-menu">
-                    <div className="col">
-                        <button className="btn-save">Save Changes</button>
+                    <div className="col col-md-4">
+                        <button className="btn-save" onClick={handleUpdate}>Save Changes</button>
                     </div>
-                    <div className="col">
+                    <div className="col col-md-4">
                         <button className="btn-password">Edit Password</button>
                     </div>
-                    <div className="col">
-                        <button className="btn-cancel">Cancel</button>
+                    <div className="col col-md-4">
+                        <button className="btn-cancel" onClick={handleCancel}>Cancel</button>
                     </div>
                 </div>
             </div>
@@ -117,6 +169,27 @@ const Profile = () => {
         </Styles>
     )
 }
+export const getServerSideProps = async (context) => {
+    try {
+      const cookie = context.req.headers.cookie;
+    //   console.log(cookie);
+      const user = await axios.get(`http://localhost:4000/v1/authcust/checktoken`, {
+        withCredentials: true,
+        headers: {cookie},
+      });
+    
+      return {
+        props: {
+            custommer: user.data.data
+        }
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        props: {},
+      };
+    }
+  };
 
 export default Profile
 const Styles = styled.div`
@@ -257,7 +330,7 @@ h2{
         line-height: 33px;
         color: #393939;
         background: #FFCD61;
-        width: 322px;
+        width: 300px;
         height: 70px;
         border-radius: 10px;
     }
@@ -275,7 +348,7 @@ h2{
         font-size: 20px;
         line-height: 33px;
         color: #FFCD61;
-        width: 322px;
+        width: 300px;
         height: 70px;
         background: #393939;
         border-radius: 10px;
@@ -294,7 +367,7 @@ h2{
         font-size: 20px;
         line-height: 33px;
         color: #393939;
-        width: 322px;
+        width: 300px;
         height: 70px;
         background: rgba(203, 203, 212, 0.27);
         border-radius: 10px;

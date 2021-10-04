@@ -8,21 +8,13 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
-const schema = yup.object().shape({
-  vehicle_name: yup.string().required("vehicle name is required").max(50),
-  location: yup.string().required("location is required"),
-  description: yup.string().required("description is required"),
-  status: yup.string().required("status is required"),
-  price: yup.number().typeError("price must be a number").required("price is required"),
-  stock: yup.number().typeError("stock must be a number").required("stock is required"),
-  id: yup.string().required("category is required"),
- 
-})
+import Swal from "sweetalert2";
+import { useRouter } from "next/dist/client/router";
 
 
 
 const Add_item = () => {
+  const router = useRouter()
     const headers = {
         "Content-Type": "form-data",
     };
@@ -31,7 +23,7 @@ const Add_item = () => {
         "location": "",
         "description": "",
         "price": "",
-        "status": "Available",
+        "status": "",
         "stock": "",
         "id": "",
         "image": "",
@@ -72,46 +64,69 @@ const Add_item = () => {
         formData.append('id', form.id);
         formData.append('image', form.image);
 
-        const onSubmit = (data) =>{
+        const handleSubmit = (e) =>{
             e.preventDefault()
             axios.post('http://localhost:4000/v1/vehicle', formData)
             .then((res)=>{
-                alert('Success');
-                // setTimeout(() => productList(), 3000);
+              console.log(!res.ok)
+                   Swal.fire(
+                        'Success!',
+                        'Data has been added!',
+                        'success'
+                      )
+                      router.push('/adminPage/homeAfterLogin')
             })
             .catch((err)=>{
-                alert(err);
+
+              if (err.response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err.response.data.message,
+                  })
+                // client received an error response (5xx, 4xx)
+              } 
+              else {
+                // anything else
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: "you may miss something.. go check again!!"
+                })
+              }
+
+                  
+                  
             })
         }
-        const { register, handleSubmit, formState: { errors } } = useForm({
-          resolver: yupResolver(schema),
-        });
+        // const { register, handleSubmit, formState: { errors } } = useForm({
+        //   resolver: yupResolver(schema),
+        // });
 
     return (
         <Styles>
             <Navbar_Bf_Login />
             <div className="container">
                 <div className="back-wrapper">
-                    <button type="submit" class="backButton">
-                        <i class="fa fa-chevron-left fa-3x"></i>
+                    <button type="submit" className="backButton">
+                        <i className="fa fa-chevron-left fa-3x"></i>
                         <p>Add new item</p>
                     </button>
                 </div>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form onSubmit={handleSubmit(onSubmit)}> */}
             <div className="container">
                 <div className="row ">
                     <div className="col">
                         <Inputfield
                             className="input-field"
                             label="Name (max up to 50 words)"
-                            {...register('vehicle_name')}
-
+                            name="vehicle_name"
                             onChange={handleChange}
                             type="text"
                             
                         />
-                         <label className="error">{errors.vehicle_name?.message}</label>
+                         {/* <label className="error">{errors.vehicle_name?.message}</label> */}
                         <div className="image-content">
                             <div className="image-main">
                                 <img className="images" src={form.imagePreview} alt="" />
@@ -138,49 +153,53 @@ const Add_item = () => {
                             <Inputfield
                                 className="input-location"
                                 label="Location"
-                                {...register('location')}
+                               name="location"
     
                                 onChange={handleChange}
                                 type="text"
                                 
                             />
-                             <p className="error">{errors.location?.message}</p>
+                             {/* <label className="error">{errors.location?.message}</label> */}
                             <Inputfield
                                 className="input-description"
                                 label="Description (max up to 150 words)"
-                                {...register('description')}
+                               name="description"
     
                                 onChange={handleChange}
                                 type="text"
                                 
                             />
-                             <p className="error">{errors.description?.message}</p>
+                             {/* <label className="error">{errors.description?.message}</label> */}
                             <h5>Price :</h5>
                             <input
                                 className="input-Text"
                                 type="text"
-                                {...register('price')}
+                                name="price"
                                 placeholder="Type the price"
                                 id=""
                                 onChange={handleChange}
                             />
-                             <p className="error">{errors.price?.message}</p>
+                             {/* <label className="error">{errors.price?.message}</label> */}
                             <h5>Status :</h5>
                             {/* <button className="button-status">
                                 Select Status
-                                <i class="fa fa-angle-down fa-2x" aria-hidden="true"></i>
+                                <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
                             </button> */}
-                           <input className="button-status" type="text" placeholder="available" name="status" onChange={handleChange} id="" readOnly />
+                           {/* <input className="button-status" type="text" placeholder="available" name="status" onChange={handleChange} id="" readOnly /> */}
+                           <select onChange={handleShowImage} name="id" id="">
+                             <option value="">Available</option>
+                             <option value="">Booked</option>
+                           </select>
                             <h5>Stock :</h5>
                             <input
                                 className="input-Text"
                                 type="text"
-                                {...register('stock')}
+                               name="stock"
                                 placeholder="Type the price"
                                 id=""
                                 onChange={handleChange}
                             />
-                             <label className="error">{errors.stock?.message}</label>
+                             {/* <label className="error">{errors.stock?.message}</label> */}
                         </div>
                     </div>
                 </div>
@@ -190,11 +209,11 @@ const Add_item = () => {
                     <div className="col-lg-5 col-md-6 ">
                         {/* <button className="button-category">
                             Add item to
-                            <i class="fa fa-angle-down fa-2x" aria-hidden="true"></i>
+                            <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
                         </button> */}
                         <select
-                                classNsme="custom-select button-status"
-                                {...register('id')}
+                                className="custom-select button-status"
+                                name="id"
                                 id="inputGroupSelect01"
                                 onChange={handleChange}
                             >
@@ -202,14 +221,15 @@ const Add_item = () => {
                                             <option value={item.id}>{item.name}</option>
                                 ))}
                         </select>
-                        <p className="error">{errors.id?.message}</p>
+                        {/* <p className="error">{errors.id?.message}</p> */}
                     </div>
                     <div className="col-lg-7 col-md-6">
-                        <button onClick={handleSubmit(onSubmit)} className="btn-save">Save item</button>
+                        {/* <button type="submit" className="btn-save">Save item</button> */}
+                        <button onClick={(e)=>handleSubmit(e)} className="btn-save">Save item</button>
                     </div>
                 </div>
             </div>
-            </form>
+            {/* </form> */}
         </Styles>
     );
 };

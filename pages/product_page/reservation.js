@@ -1,17 +1,25 @@
 import React, { useRef, useState } from "react";
 import styled from 'styled-components'
-import Footer from "../../components/footer";
-import Navbar_Bf_Login from '../../components/navbar_bf_login'
+import Footer from "../../components/molecules/footer";
+import Navbar_Bf_Login from '../../components/molecules/navbar_bf_login'
 
 const Reservation = () => {
     const[count, setCount] = useState(1);
+    const handleMinus = () =>{
+        setCount(count-1)
+        if(count <= 1){
+        setCount(1)
+        } else{
+            setCount((count -= 1))
+        }
+    }
     return (
         <Styles>
             <Navbar_Bf_Login/>
             <div className="container">
             <div className="back-wrapper">
-                <button type="submit" class="backButton">
-                    <i class="fa fa-chevron-left fa-3x"></i>
+                <button type="submit" className="backButton">
+                    <i className="fa fa-chevron-left fa-3x"></i>
                     <p>Reservation</p>
                 </button>
             </div>
@@ -24,20 +32,20 @@ const Reservation = () => {
                     <h3 className="town-title">Yogyakarta</h3>
                     <h5 className="title">No Repayment</h5>
                     <div className="button-wrapper">
-                        <button className="button-min" onClick={()=>setCount(count-1)}>
-                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        <button className="button-min" onClick={handleMinus}>
+                            <i className="fa fa-minus" aria-hidden="true"></i>
                         </button>
 
                         <span className="counter">{count}</span>
 
                         <button className="button-plus" onClick={()=>setCount(count+1)} >
-                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            <i className="fa fa-plus" aria-hidden="true"></i>
                         </button>
 
                     </div>
                     <p>Reservation Date :</p>
                     <input type="date" name="" id="" />
-                    <select class="custom-select" aria-label="Default select example">
+                    <select className="custom-select" aria-label="Default select example">
                         <option selected>Rental Day</option>
                         <option value="">1 Day</option>
                         <option value="">2 Day</option>

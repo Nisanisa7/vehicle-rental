@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import copy from "copy-to-clipboard";
 
-import Navbar_Bf_Login from '../../components/modules/navbar_bf_login'
+// import Navbar_Bf_Login from '../../components/modules/molecules/navbar_bf_login'
 import Smallcard from '../../components/smallcard';
-import Footer from '../../components/modeules/footer';
+// import Footer from '../../components/modeules/molecules/footer';
+import Navbar_Bf_Login from '../../components/molecules/navbar_bf_login';
+import Footer from '../../components/molecules/footer';
 const Booking = () => {
 
     const copyText = '#FG1209878YZS'
@@ -18,8 +20,8 @@ const Booking = () => {
             <Navbar_Bf_Login/>
             <div className="container">
             <div className="back-wrapper">
-                <button type="submit" class="backButton">
-                    <i class="fa fa-chevron-left fa-3x"></i>
+                <button type="submit" className="backButton">
+                    <i className="fa fa-chevron-left fa-3x"></i>
                     <p>Reservation</p>
                 </button>
             </div>
@@ -38,15 +40,15 @@ const Booking = () => {
     
                 </div>
             </div>
-            <div class="row first-row">
-                <div class="col-sm-5">
+            <div className="row first-row">
+                <div className="col-sm-5">
                  <Smallcard className="card">
                      <p className="quantity">
                          Quantity : 2 bikes
                      </p>
                  </Smallcard>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                  <Smallcard className="card-right card-date">
                      <p className="reservation">
                          Reservation Date :
@@ -57,8 +59,8 @@ const Booking = () => {
                  </Smallcard>
                 </div>
             </div>
-            <div class="row second-row">
-                <div class="col-sm-5">
+            <div className="row second-row">
+                <div className="col-sm-5">
                  <Smallcard className="card card-detail">
                      <label className="title-detail">Order Details :</label>
                      <ul>
@@ -68,7 +70,7 @@ const Booking = () => {
                      <p className="total">Total : 178.000</p>
                  </Smallcard>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                  <Smallcard className="identity">
                      <p className="title-identity">Identity</p>
                         <p>
@@ -86,7 +88,7 @@ const Booking = () => {
                     <button className="btn-copy">Copy</button>
 
                 </div>
-                <select classNsme="custom-select" name="" id="inputGroupSelect01">
+                <select className="custom-select" name="" id="inputGroupSelect01">
                     <option value="">Payment</option>
                     <option value="">Location</option>
                     <option value="">Location</option>

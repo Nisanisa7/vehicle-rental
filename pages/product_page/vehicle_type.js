@@ -1,89 +1,91 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Card_Item from '../../components/card_item'
-import Navbar_Bf_Login from '../../components/navbar_bf_login'
+import Navbar_after_login from '../../components/molecules/navbar_after_login'
 import Link from 'next/link'
-import Footer from '../../components/footer'
+import Footer from '../../components/molecules/footer'
+import axios from 'axios'
+import { Layout } from '../../components/molecules/layout'
 
 const Vehicle_type = () => {
+    const [category, setCategory] = useState([])
+    const [search, setSearch] = useState("")
+    useEffect(() => {
+        axios.get("http://localhost:4000/v1/vehicle")
+          .then((data)=>{
+            setCategory(data.data.item)
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+    }, [])
+    
     return (
         <Styles>
-            <Navbar_Bf_Login/>
+            <Navbar_after_login/>
+            <Layout title="Sewa Kendaraan"/>
             <div className="container">
            
-                <div class="search">
-                    <input type="text" class="searchTerm" name="" placeholder="Search vehicle (ex. cars, cars name)"/>
-                    <button type="submit" class="searchButton">
-                        <i class="fa fa-search fa-2x"></i>
+                <div className="search">
+                    <input type="text" className="searchTerm" name="" 
+                    placeholder="Search vehicle (ex. cars, cars name)"
+                    onChange={(e)=>{
+                        setSearch(e.target.value)
+                      }}/>
+                    <button type="submit" className="searchButton">
+                        <i className="fa fa-search fa-2x"></i>
                     </button>
                 </div>
-
-                <div className="submenu">
-                <h1>Popular in town</h1>
-                    <div className="popular-wrap">
-                        <Link href="">
-                        <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                        </Link>             
+                
+{/* 
+                <div className="input-group">
+                    <div className="input-group-prepend  px-0 mt-2">
+                        <select name="" id="">
+                            <option value="">Harga Terendah</option>
+                            <option value="">Harga Tertinggi</option>
+                        </select>
                     </div>
-                </div>
+                </div> */}
 
+                {/* <div className="submenu">
+                
+    
+                   
+                </div> */}
                 <div className="card-content">
-                    <Card_Item src="/Van.png" className="card1" location="Merapi" city="Yogyakarya"></Card_Item>
-                    <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
+                    
+                    {category.filter((item)=>{
+                        if(search == ""){
+                            return item
+                        } else if(item.vehicle_name.toLowerCase().includes(search.toLocaleLowerCase())){
+                            return item
+                        }
+                        }).map((item, index)=>(
+                        <>
+                        {item.name !== category[index-1]?.name && 
+                     
+                        (<div className="submenu">
+
+                            <h1 className="h1-map">{item.name}</h1>
+                            <div className="car-wrap">
+                                <Link href={`/product_page/${item.name}`}>
+                                <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                </Link>             
+                             </div>
+                        </div> )}
+                        
+                        <Card_Item id={item.idvehicle} src={item.image} className="card1 card-map" location={item.location} city={item.vehicle_name}></Card_Item>
+                        </>
+                    ))}
+
+                    {/* <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
                     <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
-                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item>
+                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item> */}
 
                 </div>
                 
-                <div className="submenu">
-                <h1>Cars</h1>        
-                    <div className="car-wrap">
-                        <Link href="">
-                        <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                        </Link>             
-                    </div>
-                </div>
-                <div className="card-content car">
-                    <Card_Item src="/Van.png" className="card1" location="Merapi" city="Yogyakarya"></Card_Item>
-                    <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
-                    <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
-                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item>
-
-                </div>
-
-                <div className="submenu">
-                <h1>Motor Bike</h1>
-                    <div className="link-wrap">
-                        <Link href="">
-                        <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                        </Link>             
-                    </div>
-                </div>
-
-                <div className="card-content motor">
-                    <Card_Item src="/Van.png" className="card1" location="Merapi" city="Yogyakarya"></Card_Item>
-                    <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
-                    <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
-                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item>
-
-                </div>
-                <div className="submenu">
-                <h1>Bike</h1>
-                    <div className="car-wrap">
-                        <Link href="">
-                        <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                        </Link>             
-                </div>
-                </div>
-                <div className="card-content bike">
-                    <Card_Item src="/Van.png" className="card1" location="Merapi" city="Yogyakarya"></Card_Item>
-                    <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
-                    <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
-                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item>
-
-                </div>
             </div>
-            <Footer className="footer"/>
+            {/* <Footer className="footer"/> */}
 
 
         </Styles>
@@ -128,19 +130,15 @@ const Styles = styled.div`
     
     }
 }
-.submenu{
-  display: flex;
-  flex-direction: row;
-  margin-top: 72px;
-  h1{
-    font-family: 'Playfair Display';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 50px;
-    color: #000000; 
-    mix-blend-mode: normal;
-  }
+.input-group{
+    select{
+        height: 50px;
+        width: 200px;
+        border: 0.8px solid #AFB0B9;
+        color: #B8BECD;
+    }
+}
+
   .link-wrap{
       height: 50px;
       width: 250px;
@@ -177,6 +175,8 @@ const Styles = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 56px;
+  gap: 1rem;
+  flex-wrap: wrap;
   .card1{
     width: 284px;
     height: 337px;
@@ -186,6 +186,26 @@ const Styles = styled.div`
     width: 284px;
     height: 337px;
 
+  }
+  .card-map{
+      width: 23%;
+  }
+  .h1-map{
+      width: 100%;
+  }
+  .submenu{
+  display: flex;
+  flex-direction: row;
+  margin-top: 72px;
+  width: 100%;
+  h1{
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 50px;
+    color: #000000; 
+    mix-blend-mode: normal;
   }
 }
 .car{

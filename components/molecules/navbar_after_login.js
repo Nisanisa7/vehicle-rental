@@ -6,7 +6,7 @@ const Navbar_after_login = () => {
         <Styles>
         <div className="container">
             <nav>
-                    <div class="logo">
+                    <div className="logo">
                         <img
                             src="/Footer-image.png"
                             alt="footer"
@@ -17,15 +17,23 @@ const Navbar_after_login = () => {
 
                     <input type="checkbox" id="check" />
                     <label for="check">
-                        <i class="fa fa-bars" aria-hidden="true" id="btn"></i>
-                        <i class="fa fa-times" aria-hidden="true" id="close"></i>
+                        <i className="fa fa-bars" aria-hidden="true" id="btn"></i>
+                        <i className="fa fa-times" aria-hidden="true" id="close"></i>
                     </label>
                     <ul>
                         <li>
-                            <a href="">Home</a>
+                        <Link href="/home">
+                                <a>
+                                    Home
+                                </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="">Vehicle Type</a>
+                        <Link href="/product_page/vehicle_type">
+                                <a>
+                                   Vehicle Type
+                                </a>
+                            </Link>
                         </li>
                         <li>
                             <a href="">History</a>
@@ -38,12 +46,12 @@ const Navbar_after_login = () => {
                                 <a href=""> <img src="/email 2.png" alt="" /> </a>
                             </li>
                             <li>
-                            <Link href="/profile_custommer/profile">
+                            <Link href="/profile_user/profile/">
                                 <a>
-                                    <img classname="image" src="/image 39.png" alt="" />
+                                    <img className="image" src="/image 39.png" alt="" />
                                 </a>
                             </Link>
-                            </li>
+                          </li>
                     </ul>
                     {/* <div className="last-item">
                         <ul>
@@ -109,6 +117,9 @@ const Styles = styled.div`
       color: #b8becd;
       ul li a:hover {
         color: #ffcd61;
+      }
+      ul li Link a img{
+        border-radius: 80% !important;
       }
     }
     label #btn,

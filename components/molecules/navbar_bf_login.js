@@ -2,16 +2,17 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import { useRouter } from 'next/dist/client/router'
+import Link from 'next/link';
 const Navbar_Bf_Login = () => {
   const router = useRouter()
-  const handlePushLogin = () =>{
-      router.push('/auth_user/login')
-  }
+  // const handlePushLogin = () =>{
+  //     router.push('/auth_user/')
+  // }
   return (
     <Styles>
 			<div className="container">
 				<nav>
-						<div class="logo">
+						<div className="logo">
 							<img
 								src="/Footer-image.png"
 								alt="footer"
@@ -22,8 +23,8 @@ const Navbar_Bf_Login = () => {
 
 						<input type="checkbox" id="check" />
 						<label for="check">
-							<i class="fa fa-bars" aria-hidden="true" id="btn"></i>
-							<i class="fa fa-times" aria-hidden="true" id="close"></i>
+							<i className="fa fa-bars" aria-hidden="true" id="btn"></i>
+							<i className="fa fa-times" aria-hidden="true" id="close"></i>
 						</label>
 						<ul>
 							<li>
@@ -39,14 +40,16 @@ const Navbar_Bf_Login = () => {
 								<a href="">About</a>
 							</li>
 							<li>
-                <a href="">
+                <Link href="/auth_user">
+                <a>
                   
-									<input type="button" onClick={handlePushLogin} class="btn-login" value="Login" />
+									<input type="button" className="btn-login" value="Login" />
                 </a>
+                </Link>
 							</li>
 							<li>
 								<a href="">
-									<input type="submit" class="btn-sign" value="Sign up" />
+									<input type="submit" className="btn-sign" value="Sign up" />
 								</a>
 							</li>
 						</ul>

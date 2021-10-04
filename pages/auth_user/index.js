@@ -1,17 +1,44 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../components/atoms/button";
 import { TransparantField } from "../../components/atoms/transparantField";
 import Footer from "../../components/molecules/footer";
-// import Footer from '../../components/molecules/footer'
 import { Layout } from "../../components/molecules/layout";
-
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/dist/client/router";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {LoginCust} from '../../Redux/Action/CustommerActions';
+import { useDispatch } from "react-redux";
 const Login = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleSignUp = () => {
+    router.push("/auth_user/register");
+  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: (values) => {
+      // console.log(values);
+      dispatch(LoginCust(values, router));
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Email is Invalid")
+        .required("email is required"),
+      password: Yup.string().required("Password is required"),
+    }),
+  });
   return (
     <Styles>
-      <Layout title="Login"/>
-      
+      <Layout title="Login" />
+
       <div className="login-wrap">
         <div className="container">
           <div className="row">
@@ -23,7 +50,12 @@ const Login = () => {
                   Le'ts Explore <br /> The World
                 </h3>
                 <p>Dont have an account?</p>
-                <Button className="btn-sign" color="dark" type="button" onClick="">
+                <Button
+                  className="btn-sign"
+                  color="dark"
+                  type="button"
+                  onClick={handleSignUp}
+                >
                   Sign Up
                 </Button>
                 {/* </div> */}
@@ -32,13 +64,13 @@ const Login = () => {
 
             <div className="col-md-1">
               <div className="center-line">
-                <div class="list-wrapper">
-                  <div class="list-item-wrapper">
-                    <div class="list-bullet"></div>
+                <div className="list-wrapper">
+                  <div className="list-item-wrapper">
+                    <div className="list-bullet"></div>
                   </div>
-                  <div class="vl"></div>
-                  <div class="list-item-wrapper">
-                    <div class="list-bullet"></div>
+                  <div className="vl"></div>
+                  <div className="list-item-wrapper">
+                    <div className="list-bullet"></div>
                   </div>
                 </div>
               </div>
@@ -47,37 +79,56 @@ const Login = () => {
             <div className="col-md-5">
               <div className="left-side">
                 <div className="form">
-                  <TransparantField
-                    className="input-box"
-                    type="email"
-                    name=""
-                    placeholder="Email"
-                  />
-                  <TransparantField
-                    className="input-box"
-                    type="password"
-                    name=""
-                    placeholder="Password"
-                  />
-                  <div className="forgot-pass">
-                    <Link href="/home">
+                  <form onSubmit={formik.handleSubmit}>
+                    <TransparantField
+                      className="input-box"
+                      type="email"
+                      value={formik.values.email} 
+                      onChange={formik.handleChange}
+                      name="email"
+                      placeholder="Email"
+                    />
+                    {formik.errors.email && formik.touched.email && (
+                      <p className="errors">{formik.errors.email}</p>
+                    )}
+                    <TransparantField
+                      className="input-box pass"
+                      type="password"
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      placeholder="Password"
+                    />
+                    {formik.errors.password && formik.touched.password && (
+                      <p className="errors">{formik.errors.password}</p>
+                    )}
+                    <div className="forgot-pass">
+                      <Link href="/home">
                         <a>Forgot password ?</a>
-                    </Link>
-                  </div>
-                  <Button className="login-button" color="shine"  type="" onClick="">
-                  Login
-                </Button>
-                <Button className="btn-google" type="" onClick="">
-                            <span>
-                            
-                                <img src="https://img.icons8.com/color/16/000000/google-logo.png"/>
-                            </span>
-                             Signup Using Google
-                </Button>
-                <Button className="responsive-btn-sign" color="dark" type="button" onClick="">
-                  Sign Up
-                </Button>
-                <div ></div>
+                      </Link>
+                    </div>
+                    <Button
+                      className="login-button"
+                      type="submit"
+                      color="shine"
+                    >
+                      Login
+                    </Button>
+                    <Button className="btn-google" type="">
+                      <span>
+                        <img src="https://img.icons8.com/color/16/000000/google-logo.png" />
+                      </span>
+                      Signup Using Google
+                    </Button>
+                    <Button
+                      className="responsive-btn-sign"
+                      color="dark"
+                      type="button"
+                    >
+                      Sign Up
+                    </Button>
+                    <div></div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -93,12 +144,13 @@ const Styles = styled.div`
   .login-wrap {
     width: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("/Login Bg.png");
-                @media screen and (max-width: 600px) {
-                    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/street.jpg');
-                    width: 100%;
-                    padding: 0 50px 0 50px;
-                }
+      url("/Login Bg.png");
+    @media screen and (max-width: 600px) {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("/street.jpg");
+      width: 100%;
+      padding: 0 50px 0 50px;
+    }
 
     .right-side {
       .inside-wrapper {
@@ -120,10 +172,10 @@ const Styles = styled.div`
         line-height: 85px;
         color: #ffffff;
         margin-bottom: 50px;
-                @media screen and (max-width: 600px) {
-                    font-size: 50px;
-                    line-height: 65px;
-                }
+        @media screen and (max-width: 600px) {
+          font-size: 50px;
+          line-height: 65px;
+        }
       }
       p {
         font-family: "Nunito";
@@ -133,9 +185,9 @@ const Styles = styled.div`
         font-size: 24px;
         line-height: 33px;
         margin-bottom: 50px;
-                @media screen and (max-width: 600px) {
-                    display: none;
-                }
+        @media screen and (max-width: 600px) {
+          display: none;
+        }
       }
       .btn-sign {
         /* /* margin-top: 25px; */
@@ -146,17 +198,17 @@ const Styles = styled.div`
         line-height: 33px;
         box-shadow: 0px 0px 20px rgba(218, 218, 218, 0.25);
         cursor: pointer;
-                @media screen and (max-width: 600px) {
-                    font-size: 36px;
-                    line-height: 42px;
-                    display: none;
-                }
+        @media screen and (max-width: 600px) {
+          font-size: 36px;
+          line-height: 42px;
+          display: none;
+        }
       }
     }
     .center-line {
-        @media screen and (max-width: 600px) {
-                   display: none;
-                }
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
       margin-top: 109px;
       padding-left: 50px;
       padding-right: 50px;
@@ -188,93 +240,101 @@ const Styles = styled.div`
       }
     }
     .left-side {
-        gap: 2rem; 
-       
+      gap: 2rem;
+
       .form {
         margin-left: auto;
         margin-right: auto;
         margin-top: 150px;
         margin-bottom: 40px;
-            @media screen and (max-width: 600px) {
-                    margin-top: 50px;
-                   
-                }
+        @media screen and (max-width: 600px) {
+          margin-top: 50px;
+        }
         .input-box {
           width: 447px;
           height: 79px;
-          margin-bottom: 40px;
+
           @media screen and (max-width: 600px) {
-                    width: 100%;
-                    height: 51px;
-                }
+            width: 100%;
+            height: 51px;
+          }
+        }
+        .pass {
+          margin-top: 40px;
+        }
+        span {
+          color: red;
         }
         .forgot-pass {
-           /* margin-top: 14px; */
-           margin-bottom: 49px;
-         }
-         .forgot-pass a {
-           color: #ffffff;
-           font-size: 18px;
-           line-height: 28px;
-           text-decoration: none;
-         }
-         .forgot-pass a:hover {
-           text-decoration: none;
-           color: #ffcd61;
-         }
-         .login-button {
-           width: 447px;
-           height: 79px;
-           font-style: normal;
-           font-weight: 900;
-           font-size: 24px;
-           line-height: 33px;
-           box-shadow: 0px 0px 20px rgba(248, 161, 112, 0.47);
-           cursor: pointer;
-           margin-bottom: 34px;
-            @media screen and (max-width: 600px) {
-                        width: 100%;
-                        height: 51px;
-                        font-size: 18px;
-                        line-height: 25px;
-                    }
-         }
-         .btn-google {
-           width: 447px;
-           height: 79px;
-           outline: none;
-           border: none;
-           font-style: normal;
-           font-weight: 900;
-           font-size: 24px;
-           cursor: pointer;
-                @media screen and (max-width: 600px) {
-                    width: 100%;
-                    height: 51px;
-                    font-size: 18px;
-                    line-height: 25px;
-                    margin-bottom: 20px;
-                }
-         }
-         .btn-google img {
-           width: 18px;
-           height: 20px;
-           margin-right: 15px;
-         }
-         .responsive-btn-sign{
-             visibility:hidden;
-             @media screen and (max-width: 600px) {
-                    width: 100%;
-                    height: 51px;
-                    font-size: 18px;
-                    line-height: 25px;
-                    visibility: visible;
-                    /* display: visible; */
-                }
-         }
-
+          /* margin-top: 14px; */
+          margin-bottom: 49px;
+        }
+        .forgot-pass a {
+          color: #ffffff;
+          font-size: 18px;
+          line-height: 28px;
+          text-decoration: none;
+        }
+        .forgot-pass a:hover {
+          text-decoration: none;
+          color: #ffcd61;
+        }
+        .login-button {
+          width: 447px;
+          height: 79px;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 24px;
+          line-height: 33px;
+          box-shadow: 0px 0px 20px rgba(248, 161, 112, 0.47);
+          cursor: pointer;
+          margin-bottom: 34px;
+          @media screen and (max-width: 600px) {
+            width: 100%;
+            height: 51px;
+            font-size: 18px;
+            line-height: 25px;
+          }
+        }
+        .btn-google {
+          width: 447px;
+          height: 79px;
+          outline: none;
+          border: none;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 24px;
+          cursor: pointer;
+          @media screen and (max-width: 600px) {
+            width: 100%;
+            height: 51px;
+            font-size: 18px;
+            line-height: 25px;
+            margin-bottom: 20px;
+          }
+        }
+        .btn-google img {
+          width: 18px;
+          height: 20px;
+          margin-right: 15px;
+        }
+        .responsive-btn-sign {
+          visibility: hidden;
+          @media screen and (max-width: 600px) {
+            width: 100%;
+            height: 51px;
+            font-size: 18px;
+            line-height: 25px;
+            visibility: visible;
+            /* display: visible; */
+          }
+        }
       }
     }
   }
+  .errors{
+  width: 90%;
+  color: red;
+  font-size: 18px;
+  } 
 `;
-

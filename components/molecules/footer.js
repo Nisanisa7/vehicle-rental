@@ -16,7 +16,7 @@ const Footer = (props) => {
                     </p>
                     <p className="credit">©2020 Vehicle Rental Center. All rights reserved</p>
                 </div>
-                <div class="destination">
+                <div className="destination">
                     <p className="footer-title">Destinations</p>
                     <ul>
                         <li>Bali</li>
@@ -26,7 +26,7 @@ const Footer = (props) => {
                         <li>Malang</li>
                     </ul>
                 </div>
-                <div class="vehicle">
+                <div className="vehicle">
                     <p className="footer-title">Vehicle</p>
                     <ul>
                         <li>Bike</li>
@@ -36,7 +36,7 @@ const Footer = (props) => {
                         <li>FAQs</li>
                     </ul>
                 </div>
-                <div class="interest">
+                <div className="interest">
                     <p className="footer-title">Interests</p>
                     <ul>
                         <li>Adventure Travel</li>
@@ -50,7 +50,7 @@ const Footer = (props) => {
 
             <div className="second-section">
                 <hr />
-                <ul class="social">
+                <ul className="social">
                     <li><img src="/twitter.png" alt=""/></li>
                     <li><img src="/Facebook.png" alt=""/></li>
                     <li><img src="/instagram.png" alt=""/></li>

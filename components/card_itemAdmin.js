@@ -2,11 +2,11 @@ import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
-const Card_Item = (props) => {
+const Card_ItemAdmin = (props) => {
     return (
         <Styles className={props.className}>
                 
-            <Link href={`/product_page/detail/${props.id}`}>
+            <Link href={`/adminPage/detail/${props.id}`}>
                 <a>
                 <img src={props.src} alt="" className="image" />
                 </a>
@@ -23,7 +23,7 @@ const Card_Item = (props) => {
     )
 }
 
-export default Card_Item
+export default Card_ItemAdmin
 const Styles = styled.div`
 position: relative;
 width: 100%;
