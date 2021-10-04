@@ -1,34 +1,116 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<br />
+<p align="center">
 
+  <h3 align="center">Vehicle Rental</h3>
+<!--   <p align="center">
+  <image align="center" src='./Screenshot/logoblanja.png' />
+  </p> -->
+
+  <p align="center">
+    <br />
+    <a href="https://github.com/Nisanisa7/vehicle-rental"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="#">View Demo</a>
+    ·
+    <a href="https://github.com/Nisanisa7/vehicle-rental/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Nisanisa7/vehicle-rental/issues">Request Feature</a>
+  </p>
+</p>
+
+
+
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Screenshots](#screenshots)
+* [Related Project](#related-project-backend)
+* [Contact](#contact)
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+
+Vehicle Rental like the name it self, this application will help you to rental a vehicle, </br> 
+such as Bike, Car and Motorcycle. This Aplication have a feature to </br> book a vehicle, paginate, search, sort, and update your profile
+
+
+### Built With
+
+* [NextJs](https://nextjs.org/)
+* [Redux](https://redux.js.org/)
+* [React Bootstrap](https://react-bootstrap.github.io/)
+* [Styled Component](https://styled-components.com/)
+* [Formik](https://formik.org/)
+* [yup](https://www.npmjs.com/package/yup)
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+This is an example of how to list things you need to use the software and how to install them.
+
+* [nodejs](https://nodejs.org/en/download/)
+
+### Installation
+
+1. Clone these 2 repos (Frontend & Backend)
+```sh
+git clone https://github.com/Nisanisa7/vehicle-rental.git
+```
+2. Install NPM packages
+```sh
+npm install
+```
+3. Add .env file at root folder project, and add following
+```sh
+REACT_APP_BACKEND_API = [Backend API]
+```
+4. Start website
+```sh
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+<!-- ROADMAP -->
+## Screenshots
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<p align="center" float="left">
+  <image src='./Screenshot/login.png' width=45%/>
+  <image src='./Screenshot/1.5 Login Seller.png' width=45%/>
+  <image src='./Screenshot/1.3Register.png'width=45%/>
+  <image src='./Screenshot/1.4 Register Seller.png' width=45%/>
+  <image src='./Screenshot/2.1.png' width=45%/>
+  <image src='./Screenshot/4.1.png'width=45%/>
+  <image src='./Screenshot/search result.png' width=45%/>
+  <image src='./Screenshot/search result not found.png' width=45%/>
+  <image src='./Screenshot/mybag.png' width=45%/>
+  <image src='./Screenshot/CheckoutPage.png' width=45%/>
+  <image src='./Screenshot/paymentmethod.png' width=45%/>
+  <image src='./Screenshot/order success.png' width=45%/>
+  <image src='./Screenshot/Userprofile.png' width=45%/>
+  <image src='./Screenshot/address page.png' width=45%/>
+</p>
 
-## Learn More
+## Related Project
+* [`Frontend-Vehicle-rental`](https://github.com/Nisanisa7/vehicle-rental)
+* [`Backend-Vehicle-api`](https://github.com/Nisanisa7/vehicle-api)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- CONTACT -->
+## Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+My Email : mahuwarni.hyinka7@gmail.com
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
