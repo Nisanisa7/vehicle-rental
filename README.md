@@ -86,7 +86,7 @@ npm run dev
 ## Screenshots
 
 <p align="center" float="left">
-  <image src='./Screenshot/login.png' width=45%/>
+<!--   <image src='./Screenshot/login.png' width=45%/>
   <image src='./Screenshot/1.5 Login Seller.png' width=45%/>
   <image src='./Screenshot/1.3Register.png'width=45%/>
   <image src='./Screenshot/1.4 Register Seller.png' width=45%/>
@@ -99,7 +99,7 @@ npm run dev
   <image src='./Screenshot/paymentmethod.png' width=45%/>
   <image src='./Screenshot/order success.png' width=45%/>
   <image src='./Screenshot/Userprofile.png' width=45%/>
-  <image src='./Screenshot/address page.png' width=45%/>
+  <image src='./Screenshot/address page.png' width=45%/> -->
 </p>
 
 ## Related Project
