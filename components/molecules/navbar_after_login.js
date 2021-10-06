@@ -1,90 +1,93 @@
-import React from 'react'
+import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 const Navbar_after_login = () => {
-    return (
-        <Styles>
-        <div className="container">
-            <nav>
-                    <div className="logo">
-                        <img
-                            src="/Footer-image.png"
-                            alt="footer"
-                            width="43px"
-                            height="43px"
-                        />
-                    </div>
 
-                    <input type="checkbox" id="check" />
-                    <label for="check">
-                        <i className="fa fa-bars" aria-hidden="true" id="btn"></i>
-                        <i className="fa fa-times" aria-hidden="true" id="close"></i>
-                    </label>
-                    <ul>
-                        <li>
-                        <Link href="/home">
-                                <a>
-                                    Home
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                        <Link href="/product_page/vehicle_type">
-                                <a>
-                                   Vehicle Type
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <a href="">History</a>
-                        </li>
-                        <li>
-                            <a href="">About</a>
-                        </li>
-                     
-                            <li> 
-                                <a href=""> <img src="/email 2.png" alt="" /> </a>
-                            </li>
-                            <li>
-                            <Link href="/profile_user/profile/">
-                                <a>
-                                    <img className="image" src="/image 39.png" alt="" />
-                                </a>
-                            </Link>
-                          </li>
-                    </ul>
-                    {/* <div className="last-item">
+  const profileState = useSelector(state => state.custommer)
+  const avatar = profileState?.profile?.image
+  const profile = localStorage.getItem('image')
+  return (
+    <Styles>
+      <div className="container">
+        <nav>
+          <div className="logo">
+            <img
+              src="/Footer-image.png"
+              alt="footer"
+              width="43px"
+              height="43px"
+            />
+          </div>
+
+          <input type="checkbox" id="check" />
+          <label for="check">
+            <i className="fa fa-bars" aria-hidden="true" id="btn"></i>
+            <i className="fa fa-times" aria-hidden="true" id="close"></i>
+          </label>
+          <ul>
+            <li>
+              <Link href="/home">
+                <a>Home</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/product_page/vehicle_type">
+                <a>Vehicle Type</a>
+              </Link>
+            </li>
+            <li>
+              <a href="">History</a>
+            </li>
+            <li>
+              <a href="">About</a>
+            </li>
+
+            <li>
+              <a href="">
+                {" "}
+                <img src="/email 2.png" alt="" />{" "}
+              </a>
+            </li>
+            <li>
+              <Link href="/profile_user">
+                <a>
+                  <img className="image" src={avatar ? avatar : profile ? profile : "/image 39.png"} alt="" />
+                </a>
+              </Link>
+            </li>
+          </ul>
+          {/* <div className="last-item">
                         <ul>
                         </ul>
                     </div> */}
-            </nav>
-        </div>
+        </nav>
+      </div>
     </Styles>
-    )
-}
+  );
+};
 
-export default Navbar_after_login
+export default Navbar_after_login;
 const Styles = styled.div`
-	
-	width: 100%;
+  width: 100%;
   height: 90px;
   background-color: #ffff;
-  /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   nav {
     display: flex;
-		align-items: center;
-		justify-content: space-between;
+    align-items: center;
+    justify-content: space-between;
     flex-direction: row;
-		width: 100%;
+    width: 100%;
 
     .logo {
       /* background-color: violet; */
-     display: inline-block;
+      display: inline-block;
     }
     ul {
       /* background-color: turquoise; */
       margin: 0;
-			list-style: none;
+      list-style: none;
       @media screen and (max-width: 992px) {
         position: fixed;
         width: 100%;
@@ -93,7 +96,7 @@ const Styles = styled.div`
         left: -100%;
         top: 80px;
         background-color: rgb(240, 246, 247);
-				color: black;
+        color: black;
         text-align: center;
         transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
@@ -102,6 +105,12 @@ const Styles = styled.div`
       display: inline-block;
       line-height: 80px;
       margin: 0 10px;
+      .image {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+      }
       @media screen and (max-width: 992px) {
         display: block;
         line-height: 10px;
@@ -118,7 +127,7 @@ const Styles = styled.div`
       ul li a:hover {
         color: #ffcd61;
       }
-      ul li Link a img{
+      ul li Link a img {
         border-radius: 80% !important;
       }
     }
@@ -154,13 +163,9 @@ const Styles = styled.div`
     }
     #check:checked ~ label #close {
       @media screen and (max-width: 992px) {
-				display: block;
+        display: block;
       }
     }
+
   }
-.last-item img{
-    .image{
-      border-radius: 50%;
-  }
-}
 `;

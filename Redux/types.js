@@ -1,7 +1,5 @@
-// export const Types = () => {
-//   CUST_LOGIN = 'CUST_LOGIN',
-//   CUST_REGISTER = 'CUST_REGISTER',
-//   ADMIN_LOGIN = 'ADMIN_LOGIN'
-// }
 export const CUST_LOGIN = 'CUST_LOGIN'
 export const CUST_REGISTER = 'CUST_REGISTER'
+export const ADD_TO_CART = 'ADD_TO_CART'
+export const UPDATE_CUSTOMMER = 'UPDATE_CUSTOMMER'
+export const AVATAR_CUSTOMMER = 'AVATAR_CUSTOMMER'

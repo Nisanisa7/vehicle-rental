@@ -22,6 +22,7 @@
     "next": "11.1.0",
     "next-images": "^1.8.1",
     "next-redux-wrapper": "^7.0.5",
+    "random-string": "^0.2.0",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0-beta.5",
     "react-copy-text": "^1.0.1",

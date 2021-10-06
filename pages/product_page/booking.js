@@ -5,15 +5,50 @@ import copy from "copy-to-clipboard";
 // import Navbar_Bf_Login from '../../components/modules/molecules/navbar_bf_login'
 import Smallcard from '../../components/smallcard';
 // import Footer from '../../components/modeules/molecules/footer';
-import Navbar_Bf_Login from '../../components/molecules/navbar_bf_login';
+import Navbar_Bf_Login from '../../components/molecules/navbar_after_login';
 import Footer from '../../components/molecules/footer';
-const Booking = () => {
+import randomString from 'random-string';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { inputBook } from '../../Redux/Action/OrderAction';
 
-    const copyText = '#FG1209878YZS'
+const Booking = () => {
+    const bookData = useSelector(state => state.Order.order)
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const [paymentvalue, setPaymentValue] = useState({
+        payment: '',
+    })
+    const handleChoose = (e)=> {
+        e.preventDefault()
+        setPaymentValue({
+            ...paymentvalue,
+            [e.target.name] : e.target.value
+        })
+    }
+    const {payment} = paymentvalue
+    console.log(payment);
+    const id = localStorage.getItem('idCustommer')
+    const profile = useSelector(state => state.custommer.profile)
+    const code = randomString({
+        length: 12,
+        numeric: true,
+        letters: true,
+        special: false,
+        exclude: ['a', 'b', 1]
+    })
+    console.log(code);
+    const copyText = code
     
     const copyToClipboard = () =>{
         alert(`You have copied "${copyText}"`);
         copy(copyText);
+    }
+    const handleOrder = (e) =>{
+        // console.log(payment);
+        e.preventDefault()
+        dispatch(inputBook(id, bookData.vehicle_name, bookData.totalPrice, bookData.amount, bookData.day, bookData.image, bookData.date, payment, router))
+        dispatch({type: 'EMPTY_CART', payload: {}})
     }
     return (
         <Styles>
@@ -27,15 +62,14 @@ const Booking = () => {
             </div>
             <div className="main-wrapper">
                 <div className="thumbnail">
-                    <img src="/bike.png" alt="" />
+                    <img src={bookData.image?bookData.image : "/bike.png"} alt="" />
                 </div>
                 <div className="detail-product">
-                    <h1 className="title-name">Fixie - Gray Only</h1>
-                    <h3 className="town-title">Yogyakarta</h3>
-                    <h5 className="title">No Repayment</h5>
+                    <h1 className="title-name">{bookData.vehicle_name}</h1>
+                    <h3 className="town-title">{bookData.location}</h3>
                 
-                <input type="hidden" readonly name="" value="FG1209878YZS" id="" />
-                <span className="code">#FG1209878YZS</span>
+                <input type="hidden" readonly name="" value={code} id="" />
+                <span className="code">#{code}</span>
                 <button className="btn-copy" onClick={copyToClipboard}>Copy booking code</button>
     
                 </div>
@@ -44,7 +78,7 @@ const Booking = () => {
                 <div className="col-sm-5">
                  <Smallcard className="card">
                      <p className="quantity">
-                         Quantity : 2 bikes
+                         Quantity : {bookData.amount}
                      </p>
                  </Smallcard>
                 </div>
@@ -54,7 +88,7 @@ const Booking = () => {
                          Reservation Date :
                      </p>
                      <p className="date">
-                     Jan 18 - 20 2021
+                        {bookData.date}
                      </p>
                  </Smallcard>
                 </div>
@@ -64,19 +98,19 @@ const Booking = () => {
                  <Smallcard className="card card-detail">
                      <label className="title-detail">Order Details :</label>
                      <ul>
-                         <li>1 Bike : Rp. 78.000</li>
-                         <li>1 Bike : Rp. 78.000</li>
+                         <li>{bookData.amount} : Rp. {bookData.price}</li>
+                         <li>For : {bookData.day} Day</li>
                      </ul>
-                     <p className="total">Total : 178.000</p>
+                     <p className="total">Total : Rp. {bookData.totalPrice}</p>
                  </Smallcard>
                 </div>
                 <div className="col-sm">
                  <Smallcard className="identity">
                      <p className="title-identity">Identity</p>
                         <p>
-                            Samantha Doe (+6290987682)
+                            {profile.name}({profile.phone_number})
                         </p> 
-                        <p>samanthadoe@mail.com </p>
+                        <p>{profile.phone_number} </p>
                  </Smallcard>
                 </div>
             </div>
@@ -84,18 +118,18 @@ const Booking = () => {
                 <p className="payment-code">Payment Code : </p>
                 <div className="copy-code">
                     <input className="input" type="text" />
-                    <span className="code">#FG1209878YZS</span>
+                    <span className="code">#{code}</span>
                     <button className="btn-copy">Copy</button>
 
                 </div>
-                <select className="custom-select" name="" id="inputGroupSelect01">
-                    <option value="">Payment</option>
-                    <option value="">Location</option>
-                    <option value="">Location</option>
-                    <option value="">Location</option>
+                <select className="custom-select" name="payment" onChange={handleChoose} id="inputGroupSelect01">
+                    <option value="" disabled>Payment</option>
+                    <option value="cash">Cash</option>
+                    <option value="transfer">Transfer</option>
+                    {/* <option value="">Location</option> */}
                 </select>
             </div>
-            <button className="btn-pay">Finish Payment</button>
+            <button className="btn-pay" type="button" onClick={handleOrder}>Finish Payment</button>
             </div>
             <Footer　className="footer"/>
         </Styles>

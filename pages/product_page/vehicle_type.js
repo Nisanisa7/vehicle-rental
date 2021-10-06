@@ -1,98 +1,101 @@
-import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
-import Card_Item from '../../components/card_item'
-import Navbar_after_login from '../../components/molecules/navbar_after_login'
-import Link from 'next/link'
-import Footer from '../../components/molecules/footer'
-import axios from 'axios'
-import { Layout } from '../../components/molecules/layout'
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Card_Item from "../../components/card_item";
+import Navbar_after_login from "../../components/molecules/navbar_after_login";
+import Link from "next/link";
+import Footer from "../../components/molecules/footer";
+import axios from "axios";
+import { Layout } from "../../components/molecules/layout";
 
 const Vehicle_type = () => {
-    const [category, setCategory] = useState([])
-    const [search, setSearch] = useState("")
-    useEffect(() => {
-        axios.get("http://localhost:4000/v1/vehicle")
-          .then((data)=>{
-            setCategory(data.data.item)
-          })
-          .catch((err)=>{
-            console.log(err);
-          })
-    }, [])
-    
-    return (
-        <Styles>
-            <Navbar_after_login/>
-            <Layout title="Sewa Kendaraan"/>
-            <div className="container">
-           
-                <div className="search">
-                    <input type="text" className="searchTerm" name="" 
-                    placeholder="Search vehicle (ex. cars, cars name)"
-                    onChange={(e)=>{
-                        setSearch(e.target.value)
-                      }}/>
-                    <button type="submit" className="searchButton">
-                        <i className="fa fa-search fa-2x"></i>
-                    </button>
-                </div>
-                
-{/* 
-                <div className="input-group">
-                    <div className="input-group-prepend  px-0 mt-2">
-                        <select name="" id="">
-                            <option value="">Harga Terendah</option>
-                            <option value="">Harga Tertinggi</option>
-                        </select>
+  const [category, setCategory] = useState([]);
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/v1/vehicle")
+      .then((data) => {
+        setCategory(data.data.item);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <Styles>
+      <Navbar_after_login />
+      <Layout title="Sewa Kendaraan" />
+      <div className="container">
+        <div className="search">
+          <input
+            type="text"
+            className="searchTerm"
+            name=""
+            placeholder="Search vehicle (ex. cars, cars name)"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+          <button type="submit" className="searchButton">
+            <i className="fa fa-search fa-2x"></i>
+          </button>
+        </div>
+        <div className="card-content">
+          <div className="row">
+            {category
+              .filter((item) => {
+                if (search == "") {
+                  return item;
+                } else if (
+                  item.vehicle_name
+                    .toLowerCase()
+                    .includes(search.toLocaleLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((item, index) => (
+                <>
+                  {item.name !== category[index - 1]?.name && (
+                    <div className="submenu">
+                      <h1 className="h1-map">{item.name}</h1>
+                      <div className="car-wrap">
+                        <Link href={`/product_page/Vehicletype/${item.id}`}>
+                          <a className="view">
+                            View all{" "}
+                            <i
+                              class="fa fa-chevron-right"
+                              aria-hidden="true"
+                            ></i>
+                          </a>
+                        </Link>
+                      </div>
                     </div>
-                </div> */}
+                  )}
+                  <div className="col-sm-12 col-md-6 col-lg-3">
+                    <Card_Item
+                      id={item.idvehicle}
+                      src={item.image}
+                      className="card1 card-map"
+                      location={item.location}
+                      city={item.vehicle_name}
+                    ></Card_Item>
+                  </div>
+                </>
+              ))}
 
-                {/* <div className="submenu">
-                
-    
-                   
-                </div> */}
-                <div className="card-content">
-                    
-                    {category.filter((item)=>{
-                        if(search == ""){
-                            return item
-                        } else if(item.vehicle_name.toLowerCase().includes(search.toLocaleLowerCase())){
-                            return item
-                        }
-                        }).map((item, index)=>(
-                        <>
-                        {item.name !== category[index-1]?.name && 
-                     
-                        (<div className="submenu">
-
-                            <h1 className="h1-map">{item.name}</h1>
-                            <div className="car-wrap">
-                                <Link href={`/product_page/${item.name}`}>
-                                <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                                </Link>             
-                             </div>
-                        </div> )}
-                        
-                        <Card_Item id={item.idvehicle} src={item.image} className="card1 card-map" location={item.location} city={item.vehicle_name}></Card_Item>
-                        </>
-                    ))}
-
-                    {/* <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
+            {/* <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
                     <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
                     <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item> */}
+          </div>
+        </div>
+      </div>
+      {/* <Footer className="footer"/> */}
+    </Styles>
+  );
+};
 
-                </div>
-                
-            </div>
-            {/* <Footer className="footer"/> */}
-
-
-        </Styles>
-    )
-}
-
-export default Vehicle_type
+export default Vehicle_type;
 const Styles = styled.div`
 .search{
     position: relative;
@@ -178,17 +181,12 @@ const Styles = styled.div`
   gap: 1rem;
   flex-wrap: wrap;
   .card1{
-    width: 284px;
+    width: 300px;
     height: 337px;
   }
-  .card{
-    margin-left: 20px;
-    width: 284px;
-    height: 337px;
 
-  }
   .card-map{
-      width: 23%;
+      width: 100%;
   }
   .h1-map{
       width: 100%;
@@ -221,4 +219,4 @@ const Styles = styled.div`
     margin-top: 90px;
 }
 
-`
+`;
