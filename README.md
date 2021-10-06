@@ -87,9 +87,9 @@ npm run dev
 
 <p align="center" float="left">
 <!--    <image src='./Screenshot/login.png' width=45%/>
-  <image src='./Screenshot/1.5 Login Seller.png' width=45%/>
-  <image src='./Screenshot/1.3Register.png'width=45%/>
-  <image src='./Screenshot/1.4 Register Seller.png' width=45%/> -->
+  <image src='./Screenshot/1.5 Login Seller.png' width=45%/> -->
+  <image src='./Screenshot/Login.png'width=45%/>
+  <image src='./Screenshot/Register.png' width=45%/>
   <image src='./Screenshot/Home.png' width=45%/>
   <image src='./Screenshot/Type.png'width=45%/>
   <image src='./Screenshot/Detail.png' width=45%/>
