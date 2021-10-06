@@ -2,9 +2,9 @@
 <p align="center">
 
   <h3 align="center">Vehicle Rental</h3>
-<!--   <p align="center">
-  <image align="center" src='./Screenshot/logoblanja.png' />
-  </p> -->
+  <p align="center">
+  <image align="center" src='./Screenshot/Logo-Vehicle.png' />
+  </p>
 
   <p align="center">
     <br />
@@ -39,7 +39,7 @@
 ## About The Project
 
 
-Vehicle Rental like the name it self, this application will help you to rental a vehicle, </br> 
+Vehicle Rental like the name it self, this application will help you to rent a vehicle, </br> 
 such as Bike, Car and Motorcycle. This Aplication have a feature to </br> book a vehicle, paginate, search, sort, and update your profile
 
 
@@ -86,20 +86,20 @@ npm run dev
 ## Screenshots
 
 <p align="center" float="left">
-<!--   <image src='./Screenshot/login.png' width=45%/>
+<!--    <image src='./Screenshot/login.png' width=45%/>
   <image src='./Screenshot/1.5 Login Seller.png' width=45%/>
   <image src='./Screenshot/1.3Register.png'width=45%/>
-  <image src='./Screenshot/1.4 Register Seller.png' width=45%/>
-  <image src='./Screenshot/2.1.png' width=45%/>
-  <image src='./Screenshot/4.1.png'width=45%/>
-  <image src='./Screenshot/search result.png' width=45%/>
-  <image src='./Screenshot/search result not found.png' width=45%/>
-  <image src='./Screenshot/mybag.png' width=45%/>
-  <image src='./Screenshot/CheckoutPage.png' width=45%/>
-  <image src='./Screenshot/paymentmethod.png' width=45%/>
+  <image src='./Screenshot/1.4 Register Seller.png' width=45%/> -->
+  <image src='./Screenshot/Home.png' width=45%/>
+  <image src='./Screenshot/Type.png'width=45%/>
+  <image src='./Screenshot/Detail.png' width=45%/>
+  <image src='./Screenshot/Reservation.png' width=45%/>
+  <image src='./Screenshot/Book2.png' width=45%/>
+  <image src='./Screenshot/Profile.png' width=45%/>
+<!--   <image src='./Screenshot/paymentmethod.png' width=45%/>
   <image src='./Screenshot/order success.png' width=45%/>
   <image src='./Screenshot/Userprofile.png' width=45%/>
-  <image src='./Screenshot/address page.png' width=45%/> -->
+  <image src='./Screenshot/address page.png' width=45%/>  -->
 </p>
 
 ## Related Project
