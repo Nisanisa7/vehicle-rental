@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-const Navbar_after_login = () => {
+const NavbarAdmin = () => {
 
-  const profileState = useSelector(state => state.custommer)
-  const avatar = profileState?.profile?.image
-  const profile = localStorage.getItem('image')
+  // const profileState = useSelector(state => state.custommer)
+  // const avatar = profileState?.profile?.image
+  // const profile = localStorage.getItem('image')
   return (
     <Styles>
       <div className="container">
@@ -27,17 +27,19 @@ const Navbar_after_login = () => {
           </label>
           <ul>
             <li>
-              <Link href="/home">
+              <Link href="/adminPage/homeAfterLogin">
                 <a>Home</a>
               </Link>
             </li>
             <li>
-              <Link href="/product_page/vehicle_type">
+              <Link href="/adminPage/vehicle_type_admin">
                 <a>Vehicle Type</a>
               </Link>
             </li>
             <li>
-              <a href="">History</a>
+            <Link href="/adminPage/historyAdmin">
+                <a>History</a>
+              </Link>
             </li>
             <li>
               <a href="">About</a>
@@ -52,22 +54,20 @@ const Navbar_after_login = () => {
             <li>
               <Link href="/profile_user">
                 <a>
-                  <img className="image" src={avatar ? avatar : profile ? profile : "/image 39.png"} alt="" />
+                  <img className="image" src="/image 39.png" alt="" />
+                  {/* <img className="image" src={avatar ? avatar : profile ? profile : "/image 39.png"} alt="" /> */}
                 </a>
               </Link>
             </li>
           </ul>
-          {/* <div className="last-item">
-                        <ul>
-                        </ul>
-                    </div> */}
+  
         </nav>
       </div>
     </Styles>
   );
 };
 
-export default Navbar_after_login;
+export default NavbarAdmin;
 const Styles = styled.div`
   width: 100%;
   height: 90px;

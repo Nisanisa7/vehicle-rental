@@ -17,9 +17,7 @@ const Profile = ({ custommer }) => {
   const dispatch = useDispatch();
   const Profile = useSelector((state) => state.custommer.profile);
   const DateJoined = localStorage.getItem('createdAt')
-  console.log(DateJoined);
   const id = localStorage.getItem('idCustommer')
-  console.log(id);
   let DateObj = new Date(DateJoined);
   let Year = DateObj.getFullYear();
   let Day = ("0" + DateObj.getDate()).slice(-2);

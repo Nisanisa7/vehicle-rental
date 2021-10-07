@@ -21,7 +21,6 @@ export const inputBook = (idCustommer, vehicle_name, totalprice, amount, rentalD
     axios.post(`http://localhost:4000/v1/order`, dataBook)
     .then((result)=>{
         const resultBook = result.data.data;
-        console.log(resultBook, "action order");
         dispatch({ type: "INPUT_ORDER", payload: resultBook });
         localStorage.setItem("Order", resultBook.idOrder);
         localStorage.removeItem(

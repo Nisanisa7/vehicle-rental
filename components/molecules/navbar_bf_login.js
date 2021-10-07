@@ -34,7 +34,7 @@ const Navbar_Bf_Login = () => {
 								<a href="">Vehicle Type</a>
 							</li>
 							<li>
-								<a href="">History</a>
+								<a href="/product_page/history">History</a>
 							</li>
 							<li>
 								<a href="">About</a>

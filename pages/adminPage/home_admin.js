@@ -1,16 +1,17 @@
 
 import styled from "styled-components";
 import Card_Item from "../../components/card_item";
-import Navbar_Bf_Login from "../../components/molecules/navbar_bf_login";
+
 import { Layout } from "../../components/molecules/layout";
 import Link from "next/link";
 // import Footer from "../components/footer";
 import Image from "next/dist/client/image";
+import NavbarAdmin from "../../components/molecules/navbar_admin";
 export default function Home_admin() {
   return (
     <Styles>
       <Layout title="Welcome"></Layout>
-      <Navbar_Bf_Login />
+      <NavbarAdmin />
 
       <div className="banner">
         <div className="container">

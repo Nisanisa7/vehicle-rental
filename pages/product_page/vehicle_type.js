@@ -175,18 +175,24 @@ const Styles = styled.div`
 
 }
 .card-content{
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   margin-top: 56px;
-  gap: 1rem;
-  flex-wrap: wrap;
-  .card1{
+
+  /* gap: 1rem;
+  flex-wrap: wrap; */
+  /* .card1{
     width: 300px;
     height: 337px;
-  }
+    gap: 1px;
+  } */
 
   .card-map{
-      width: 100%;
+      /* width: 23%; */
+      /* grid-gap: 50px; */
+      /* padding: 30px; */
+      /* margin: 10px;
+      padding: 10px; */
   }
   .h1-map{
       width: 100%;

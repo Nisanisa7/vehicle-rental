@@ -89,7 +89,7 @@ const home = ({ getCity }) => {
           <h1>Popular in town</h1>
           <Link href="/product_page/vehicle_type">
             <a className="view">
-              View all <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              View all <i className="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
           </Link>
         </div>
@@ -136,7 +136,7 @@ const home = ({ getCity }) => {
           <h1>Testimonials</h1>
           <Link href="">
             <a className="view">
-              View all <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              View all <i className="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
           </Link>
         </div>

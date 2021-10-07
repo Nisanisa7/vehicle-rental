@@ -5,8 +5,8 @@ import { Layout } from '../../components/molecules/layout'
 import Link from 'next/link'
 import Card from '../../components/card'
 // import Footer from '../../components/footer'
-import Navbar_after_login from '../../components/molecules/navbar_after_login'
 import { useRouter } from 'next/dist/client/router'
+import NavbarAdmin from '../../components/molecules/navbar_admin'
 
 const HomeAfterLogin = () => {
     const router = useRouter()
@@ -16,7 +16,7 @@ const HomeAfterLogin = () => {
     return (
         <Styles>
         <Layout title="home"/>
-        <Navbar_after_login/>
+        <NavbarAdmin/>
         <div className="banner">
         <div className="container">
           <div className="row">

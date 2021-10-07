@@ -5,7 +5,8 @@ import styled from "styled-components";
 import Card_Item from "../../components/card_item";
 import Card_ItemAdmin from "../../components/card_itemAdmin";
 import { Layout } from "../../components/molecules/layout";
-import Navbar_after_login from "../../components/molecules/navbar_after_login";
+import NavbarAdmin from "../../components/molecules/navbar_admin";
+
 
 const Vehicle_type_admin = () => {
   const [category, setCategory] = useState([])
@@ -21,7 +22,7 @@ const Vehicle_type_admin = () => {
   }, [])
   return (
     <Styles>
-      <Navbar_after_login />
+      <NavbarAdmin />
       <Layout title="Rental Kendaraan"/>
       <div className="container">
         <div className="search">

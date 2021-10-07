@@ -14,7 +14,6 @@ const CustommerReducer = (state = initialState, action) => {
                 profile: action.payload
             }
         case Types.UPDATE_CUSTOMMER:
-            console.log('halo', state.profile.data);
             return{
                 ...state,
                 profile: action.payload

@@ -1,237 +1,221 @@
-
 import FormData from "form-data";
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Inputfield from "../../components/atoms/inputfield";
-import Navbar_Bf_Login from "../../components/molecules/navbar_bf_login";
-import axios from 'axios'
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/dist/client/router";
-
-
+import NavbarAdmin from "../../components/molecules/navbar_admin";
 
 const Add_item = () => {
-  const router = useRouter()
-    const headers = {
-        "Content-Type": "form-data",
-    };
-    const [form, setForm] = useState({
-        "vehicle_name": "",
-        "location": "",
-        "description": "",
-        "price": "",
-        "status": "",
-        "stock": "",
-        "id": "",
-        "image": "",
-        "imagePreview": null
+  const router = useRouter();
+  const headers = {
+    "Content-Type": "form-data",
+  };
+  const [form, setForm] = useState({
+    vehicle_name: "",
+    location: "",
+    description: "",
+    price: "",
+    status: "",
+    stock: "",
+    id: "",
+    image: "",
+    imagePreview: null,
+  });
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/v1/vehicle_type/")
+      .then((res) => {
+        setItems(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const handleShowImage = (e) => {
+    setForm({
+      ...form,
+      image: e.target.files[0],
+      imagePreview: URL.createObjectURL(e.target.files[0]),
     });
-    const [items, setItems] = useState([])
-    useEffect(() => {
-        axios.get("http://localhost:4000/v1/vehicle_type/")
-          .then((res)=>{
-            setItems(res.data.data)
-          })
-          .catch((err)=>{
-            console.log(err);
-          })
-    }, [])
-    const handleShowImage = (e) => {
-        setForm({
-            ...form,
-            image: e.target.files[0],
-            imagePreview: URL.createObjectURL(e.target.files[0]),
-        });
-    };
-        const handleChange = (e) => {
-            setForm({
-                ...form,
-                [e.target.name] : e.target.value
-            })
+  };
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // let formData = new FormData([form]);
+  const formData = new FormData();
+
+  formData.append("vehicle_name", form.vehicle_name);
+  formData.append("location", form.location);
+  formData.append("description", form.description);
+  formData.append("price", form.price);
+  formData.append("status", form.status);
+  formData.append("stock", form.stock);
+  formData.append("id", form.id);
+  formData.append("image", form.image);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/v1/vehicle", formData)
+      .then((res) => {
+        console.log(!res.ok);
+        Swal.fire("Success!", "Data has been added!", "success");
+        router.push("/adminPage/homeAfterLogin");
+      })
+      .catch((err) => {
+        if (err.response) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.message,
+          });
+          // client received an error response (5xx, 4xx)
+        } else {
+          // anything else
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "you may miss something.. go check again!!",
+          });
         }
-        // let formData = new FormData([form]);
-        const formData = new FormData();
+      });
+  };
+  // const { register, handleSubmit, formState: { errors } } = useForm({
+  //   resolver: yupResolver(schema),
+  // });
 
-        formData.append('vehicle_name', form.vehicle_name);
-        formData.append('location', form.location);
-        formData.append('description', form.description);
-        formData.append('price', form.price);
-        formData.append('status', form.status);
-        formData.append('stock', form.stock);
-        formData.append('id', form.id);
-        formData.append('image', form.image);
-
-        const handleSubmit = (e) =>{
-            e.preventDefault()
-            axios.post('http://localhost:4000/v1/vehicle', formData)
-            .then((res)=>{
-              console.log(!res.ok)
-                   Swal.fire(
-                        'Success!',
-                        'Data has been added!',
-                        'success'
-                      )
-                      router.push('/adminPage/homeAfterLogin')
-            })
-            .catch((err)=>{
-
-              if (err.response) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: err.response.data.message,
-                  })
-                // client received an error response (5xx, 4xx)
-              } 
-              else {
-                // anything else
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: "you may miss something.. go check again!!"
-                })
-              }
-
-                  
-                  
-            })
-        }
-        // const { register, handleSubmit, formState: { errors } } = useForm({
-        //   resolver: yupResolver(schema),
-        // });
-
-    return (
-        <Styles>
-            <Navbar_Bf_Login />
-            <div className="container">
-                <div className="back-wrapper">
-                    <button type="submit" className="backButton">
-                        <i className="fa fa-chevron-left fa-3x"></i>
-                        <p>Add new item</p>
-                    </button>
+  return (
+    <Styles>
+      <NavbarAdmin />
+      <div className="container">
+        <div className="back-wrapper">
+          <button type="submit" className="backButton">
+            <i className="fa fa-chevron-left fa-3x"></i>
+            <p>Add new item</p>
+          </button>
+        </div>
+      </div>
+      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+      <div className="container">
+        <div className="row ">
+          <div className="col">
+            <Inputfield
+              className="input-field"
+              label="Name (max up to 50 words)"
+              name="vehicle_name"
+              onChange={handleChange}
+              type="text"
+            />
+            {/* <label className="error">{errors.vehicle_name?.message}</label> */}
+            <div className="image-content">
+              <div className="image-main">
+                <img className="images" src={form.imagePreview} alt="" />
+              </div>
+              <div className="d-flex thumbnail-group">
+                <div className="thumbnail-image"></div>
+                <div className="thumbnail-image-side">
+                  <label htmlFor="upload-button">
+                    <img className="image-thumb" src="/ADDMOAR.png" alt="" />
+                  </label>
+                  <input
+                    type="file"
+                    id="upload-button"
+                    name="image"
+                    style={{ display: "none" }}
+                    onChange={handleShowImage}
+                  />
                 </div>
+              </div>
             </div>
-            {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-            <div className="container">
-                <div className="row ">
-                    <div className="col">
-                        <Inputfield
-                            className="input-field"
-                            label="Name (max up to 50 words)"
-                            name="vehicle_name"
-                            onChange={handleChange}
-                            type="text"
-                            
-                        />
-                         {/* <label className="error">{errors.vehicle_name?.message}</label> */}
-                        <div className="image-content">
-                            <div className="image-main">
-                                <img className="images" src={form.imagePreview} alt="" />
-                            </div>
-                            <div className="d-flex thumbnail-group">
-                                <div className="thumbnail-image"></div>
-                                <div className="thumbnail-image-side">
-                                    <label htmlFor="upload-button">
-                                        <img className="image-thumb" src="/ADDMOAR.png" alt="" />
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="upload-button"
-                                        name="image"
-                                        style={{ display: "none" }}
-                                        onChange={handleShowImage}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="form">
-                            <Inputfield
-                                className="input-location"
-                                label="Location"
-                               name="location"
-    
-                                onChange={handleChange}
-                                type="text"
-                                
-                            />
-                             {/* <label className="error">{errors.location?.message}</label> */}
-                            <Inputfield
-                                className="input-description"
-                                label="Description (max up to 150 words)"
-                               name="description"
-    
-                                onChange={handleChange}
-                                type="text"
-                                
-                            />
-                             {/* <label className="error">{errors.description?.message}</label> */}
-                            <h5>Price :</h5>
-                            <input
-                                className="input-Text"
-                                type="text"
-                                name="price"
-                                placeholder="Type the price"
-                                id=""
-                                onChange={handleChange}
-                            />
-                             {/* <label className="error">{errors.price?.message}</label> */}
-                            <h5>Status :</h5>
-                            {/* <button className="button-status">
+          </div>
+          <div className="col">
+            <div className="form">
+              <Inputfield
+                className="input-location"
+                label="Location"
+                name="location"
+                onChange={handleChange}
+                type="text"
+              />
+              {/* <label className="error">{errors.location?.message}</label> */}
+              <Inputfield
+                className="input-description"
+                label="Description (max up to 150 words)"
+                name="description"
+                onChange={handleChange}
+                type="text"
+              />
+              {/* <label className="error">{errors.description?.message}</label> */}
+              <h5>Price :</h5>
+              <input
+                className="input-Text"
+                type="text"
+                name="price"
+                placeholder="Type the price"
+                id=""
+                onChange={handleChange}
+              />
+              {/* <label className="error">{errors.price?.message}</label> */}
+              <h5>Status :</h5>
+              {/* <button className="button-status">
                                 Select Status
                                 <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
                             </button> */}
-                           {/* <input className="button-status" type="text" placeholder="available" name="status" onChange={handleChange} id="" readOnly /> */}
-                           <select onChange={handleShowImage} name="id" id="">
-                             <option value="">Available</option>
-                             <option value="">Booked</option>
-                           </select>
-                            <h5>Stock :</h5>
-                            <input
-                                className="input-Text"
-                                type="text"
-                               name="stock"
-                                placeholder="Type the price"
-                                id=""
-                                onChange={handleChange}
-                            />
-                             {/* <label className="error">{errors.stock?.message}</label> */}
-                        </div>
-                    </div>
-                </div>
+              {/* <input className="button-status" type="text" placeholder="available" name="status" onChange={handleChange} id="" readOnly /> */}
+              <select className="button-status" onChange={handleShowImage} name="id" id="">
+                <option value="">Available</option>
+                <option value="">Booked</option>
+              </select>
+              <h5>Stock :</h5>
+              <input
+                className="input-Text"
+                type="text"
+                name="stock"
+                placeholder="Type the price"
+                id=""
+                onChange={handleChange}
+              />
+              {/* <label className="error">{errors.stock?.message}</label> */}
             </div>
-            <div className="container">
-                <div className="row button-wrapper">
-                    <div className="col-lg-5 col-md-6 ">
-                        {/* <button className="button-category">
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row button-wrapper">
+          <div className="col-lg-5 col-md-6 ">
+            {/* <button className="button-category">
                             Add item to
                             <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
                         </button> */}
-                        <select
-                                className="custom-select button-status"
-                                name="id"
-                                id="inputGroupSelect01"
-                                onChange={handleChange}
-                            >
-                                  {items.map((item)=>(
-                                            <option value={item.id}>{item.name}</option>
-                                ))}
-                        </select>
-                        {/* <p className="error">{errors.id?.message}</p> */}
-                    </div>
-                    <div className="col-lg-7 col-md-6">
-                        {/* <button type="submit" className="btn-save">Save item</button> */}
-                        <button onClick={(e)=>handleSubmit(e)} className="btn-save">Save item</button>
-                    </div>
-                </div>
-            </div>
-            {/* </form> */}
-        </Styles>
-    );
+            <select
+              className="custom-select button-status"
+              name="id"
+              id="inputGroupSelect01"
+              onChange={handleChange}
+            >
+              {items.map((item) => (
+                <option value={item.id}>{item.name}</option>
+              ))}
+            </select>
+            {/* <p className="error">{errors.id?.message}</p> */}
+          </div>
+          <div className="col-lg-7 col-md-6">
+            {/* <button type="submit" className="btn-save">Save item</button> */}
+            <button onClick={(e) => handleSubmit(e)} className="btn-save">
+              Save item
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* </form> */}
+    </Styles>
+  );
 };
 
 export default Add_item;
@@ -270,11 +254,11 @@ const Styles = styled.div`
   .input-field {
     /* margin-bottom: 45px; */
   }
-.image-content{
-  margin-top: 45px;
+  .image-content {
+    margin-top: 45px;
     @media screen and (max-width: 920px) {
-        display: grid;
-        justify-content: center;
+      display: grid;
+      justify-content: center;
     }
     .image-main {
       background: #f5f5f6;
@@ -316,7 +300,7 @@ const Styles = styled.div`
         }
       }
     }
-}
+  }
   .form {
     .button-status {
       width: 100%;
@@ -329,10 +313,6 @@ const Styles = styled.div`
       display: flex;
       color: #80918e;
       margin-bottom: 17px;
-      .fa {
-        margin-left: auto;
-        color: #80918e;
-      }
     }
     .input-location {
       margin-bottom: 37px;
@@ -360,48 +340,46 @@ const Styles = styled.div`
       line-height: 24px;
     }
   }
-.button-wrapper{
-
+  .button-wrapper {
     margin-top: 70px;
     select {
-        @media screen and (max-width: 920px) {
-            width: 350px;
-            height: 89px;
-        }
-        width: 443px;
+      @media screen and (max-width: 920px) {
+        width: 350px;
         height: 89px;
-        background:  #393939;;
-        border-radius: 10px;
-        outline: none;
-        text-align:center;
-        border: 1px solid  #393939;;
-        color: #FFCD61;
-        font-size: 24px;
-        margin-bottom: 17px;
-        .fa {
-          float: right;
-          color: #FFCD61;
-        }
       }
-  .btn-save{
-        @media screen and (max-width: 920px) {
-            width: 350px;
-            height: 89px;
-        
-        }
-        width: 100%;
+      width: 443px;
+      height: 89px;
+      background: #393939;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+      border: 1px solid #393939;
+      color: #ffcd61;
+      font-size: 24px;
+      margin-bottom: 17px;
+      .fa {
+        float: right;
+        color: #ffcd61;
+      }
+    }
+    .btn-save {
+      @media screen and (max-width: 920px) {
+        width: 350px;
         height: 89px;
-        border-radius: 10px;
-        outline: none;
-        text-align:center;
-        font-size: 24px;
-        margin-bottom: 17px;
-        background: #FFCD61;
-        border: none;
-        box-shadow: 0px 0px 20px rgba(251, 143, 29, 0.4);
+      }
+      width: 100%;
+      height: 89px;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 17px;
+      background: #ffcd61;
+      border: none;
+      box-shadow: 0px 0px 20px rgba(251, 143, 29, 0.4);
+    }
   }
-}
-.error{
-  color: red;
-}
+  .error {
+    color: red;
+  }
 `;

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Card_Item from "../../components/card_item";
-import Navbar_after_login from "../../components/navbar_after_login";
+import NavbarAdmin from "../../components/molecules/navbar_admin";
 
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
@@ -14,7 +14,7 @@ const View_more = () => {
   return (
     <Styles>
       <div className="container navbar">
-        <Navbar_after_login />
+        <NavbarAdmin />
       </div>
       <div className="container submenu">
         <div className="d-flex justify-content-between">

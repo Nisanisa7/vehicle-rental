@@ -15,7 +15,6 @@ const Reservation = () => {
   const cartData = useSelector((state) => state.cartItem.cart[0]);
   const qty = useSelector((state) => state.cartItem.quantity);
   const totalprice = useSelector((state)=> state.cartItem.totalPrice)
-  console.log(totalprice);
   const [dayvalue, setDay] = useState({
       dayrental:''
   })
@@ -35,10 +34,8 @@ const Reservation = () => {
       })
   }
   const {reservationDate} = orderDate
-  console.log(reservationDate);
   const {dayrental} = dayvalue
   const countTotal = totalprice * dayrental * qty
-  console.log(countTotal);
   const movePage = () =>{
     dispatch(addOrder(cartData, countTotal, reservationDate, dayrental))
     router.push('/product_page/booking')

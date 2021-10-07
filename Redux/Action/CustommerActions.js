@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import * as Types from "../types";
 
 export const LoginCust = (data, router) => (dispatch) => {
-  console.log(data);
   axios
     .post("http://localhost:4000/v1/authcust/login", data, {
       withCredentials: true,
@@ -16,7 +15,6 @@ export const LoginCust = (data, router) => (dispatch) => {
       const image = res.data.data.image;
       const token = res.data.data.token;
       const createdAt = res.data.data.createdAt;
-      console.log(token);
 
       if (status === "inactive") {
         Swal.fire({
@@ -28,7 +26,6 @@ export const LoginCust = (data, router) => (dispatch) => {
       }
       const resultLogin = res.data.data;
       localStorage.setItem("token", token);
-      console.log(resultLogin);
       localStorage.setItem("status", status);
       localStorage.setItem("isAuth", isAuth);
       localStorage.setItem("role", role);
@@ -59,7 +56,6 @@ export const RegisterCustommer = (data, router) => (dispatch) => {
   axios.post("http://localhost:4000/v1/authcust/register", data)
   .then((res) => {
     const result = res.data.data;
-    console.log(result);
     dispatch({ type: Types.CUST_REGISTER, payload: result });
     Swal.fire(
       "Registration success!",
@@ -79,7 +75,6 @@ export const RegisterCustommer = (data, router) => (dispatch) => {
 };
 
 export const updateProfile = (data, idCustommer) => (dispatch) =>{
-  console.log(data);
   const formData = new FormData()
   formData.append('name', data.name)
   formData.append('display_name', data.display_name)
@@ -92,7 +87,6 @@ export const updateProfile = (data, idCustommer) => (dispatch) =>{
   axios.patch(`http://localhost:4000/v1/user/${idCustommer}`, formData)
   .then((res)=>{
     const ResultData = res.data.data
-    console.log(ResultData, 'action result');
     dispatch({type: Types.UPDATE_CUSTOMMER, payload: ResultData})
     Swal.fire(
       'Update Success',

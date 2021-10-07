@@ -17,6 +17,6 @@ export default Cardwrapper;
 
 const StyledCardWrapper = styled.div`
   background: #ffffff;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 25px;
 `;

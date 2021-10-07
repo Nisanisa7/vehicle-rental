@@ -27,7 +27,6 @@ const Booking = () => {
         })
     }
     const {payment} = paymentvalue
-    console.log(payment);
     const id = localStorage.getItem('idCustommer')
     const profile = useSelector(state => state.custommer.profile)
     const code = randomString({
@@ -37,7 +36,6 @@ const Booking = () => {
         special: false,
         exclude: ['a', 'b', 1]
     })
-    console.log(code);
     const copyText = code
     
     const copyToClipboard = () =>{

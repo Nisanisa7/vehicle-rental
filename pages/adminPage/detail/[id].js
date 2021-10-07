@@ -21,6 +21,7 @@ import SwiperCore, {
 import Footer from "../../../components/molecules/footer";
 import axios from "axios";
 import Vehicle_type_admin from "../vehicle_type_admin";
+import NavbarAdmin from "../../../components/molecules/navbar_admin";
 
 
 // install Swiper modules
@@ -40,7 +41,7 @@ const Detail_vehicle = ({detail}) => {
     return (   
         <Styles>
             <p>{JSON.stringify(detail)}</p>
-            <Navbar_after_login/>
+            <NavbarAdmin/>
         <div className="container">
 
             <div className="back-wrapper">
