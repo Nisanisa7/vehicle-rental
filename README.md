@@ -91,11 +91,13 @@ npm run dev
   <image src='./Screenshot/Login.png'width=45%/>
   <image src='./Screenshot/Register.png' width=45%/>
   <image src='./Screenshot/Home.png' width=45%/>
-  <image src='./Screenshot/Type.png'width=45%/>
+  <image src='./Screenshot/Type-new.png'width=45%/>
   <image src='./Screenshot/Detail.png' width=45%/>
   <image src='./Screenshot/Reservation.png' width=45%/>
   <image src='./Screenshot/Book2.png' width=45%/>
   <image src='./Screenshot/success.png' width=45%/>
+  <image src='./Screenshot/history.png' width=45%/>
+  <image src='./Screenshot/Add item.png' width=45%/>
   <image src='./Screenshot/Profile.png' width=45%/>
 <!--   <image src='./Screenshot/paymentmethod.png' width=45%/>
   <image src='./Screenshot/order success.png' width=45%/>
