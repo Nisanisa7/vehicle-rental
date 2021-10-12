@@ -11,7 +11,8 @@ import randomString from 'random-string';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { inputBook } from '../../Redux/Action/OrderAction';
-
+import { PrivateRoute } from '../../Route/PrivateRoute';
+import cookies from 'next-cookies';
 const Booking = () => {
     const bookData = useSelector(state => state.Order.order)
     const dispatch = useDispatch()
@@ -60,7 +61,7 @@ const Booking = () => {
             </div>
             <div className="main-wrapper">
                 <div className="thumbnail">
-                    <img src={bookData.image?bookData.image : "/bike.png"} alt="" />
+                    <img src={ bookData.image? bookData.image : "/bike.png"} alt="" />
                 </div>
                 <div className="detail-product">
                     <h1 className="title-name">{bookData.vehicle_name}</h1>
@@ -135,6 +136,25 @@ const Booking = () => {
 }
 
 export default Booking
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+    try {
+      const token = await cookies(ctx).token;
+      const role = await cookies(ctx).user_role;
+      let isCustommer = '';
+      if (role === 'custommer') {
+        isCustommer = true;
+      }
+      return{
+        props: {
+          role: role,
+          token: token,
+          isCustommer: isCustommer,
+        }
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  });
 const Styles = styled.div`
 .back-wrapper{
         .backButton{

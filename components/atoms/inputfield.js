@@ -19,7 +19,6 @@ const Inputfield = ({id, className, label, name, value, onChange, type, defaultV
         </Styles>
     )
 }
-
 export default Inputfield
 const Styles = styled.div`
 

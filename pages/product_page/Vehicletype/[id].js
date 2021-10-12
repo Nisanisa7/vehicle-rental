@@ -3,7 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import Card_Item from "../../../components/card_item";
 import Navbar_after_login from "../../../components/molecules/navbar_after_login";
-
+import cookies from 'next-cookies';
+import { PrivateRoute } from "../../../Route/PrivateRoute";
 const VehicleType = ({ vehicle }) => {
   return (
     <Styles>
@@ -31,17 +32,26 @@ const VehicleType = ({ vehicle }) => {
   );
 };
 
-export const getServerSideProps = async (context) => {
-  const { id } = context.query;
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  const { id } = ctx.query;
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
   const { data } = await axios.get(
-    `http://localhost:4000/v1/vehicle/type/${id}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/type/${id}`
   );
+  let isCustommer = '';
+  if (role === 'custommer') {
+    isCustommer = true;
+  }
   return {
     props: {
       vehicle: data.item,
+      role: role,
+      token: token,
+      isCustommer: isCustommer,
     },
   };
-};
+});
 export default VehicleType;
 const Styles = styled.div`
   .submenu {

@@ -3,12 +3,14 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Card_Item from "../../components/card_item";
 import NavbarAdmin from "../../components/molecules/navbar_admin";
+import cookies from 'next-cookies';
+import { PrivateRouteAdmin } from "../../Route/PrivateRoute";
 
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
     const [search, setSearch] = useState("")
     useEffect(async() => {
-      const result = await axios('http://localhost:4000/v1/vehicle')
+      const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
       setVehicle(result.data)
     }, [])
   return (
@@ -46,6 +48,19 @@ const View_more = () => {
 };
 
 export default View_more;
+export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isAdmin = '';
+  if (role === 'admin') {
+    isAdmin = true;
+  }
+  return {
+    props: { token },
+    isAdmin: isAdmin,
+  };
+});
+
 const Styles = styled.div`
   .navbar {
     margin-top: 20px;

@@ -1,18 +1,16 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button } from "../../components/atoms/button";
-import { TransparantField } from "../../components/atoms/transparantField";
+import Button  from "../../components/atoms/button";
+import  TransparantField  from "../../components/atoms/transparantField";
 import Footer from "../../components/molecules/footer";
 import { Layout } from "../../components/molecules/layout";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/dist/client/router";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {LoginCust} from '../../Redux/Action/CustommerActions';
 import { useDispatch } from "react-redux";
+import { PublicRoute } from "../../Route/PublicRoute";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -135,11 +133,17 @@ const Login = () => {
           </div>
         </div>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </Styles>
   );
 };
 export default Login;
+export const getServerSideProps = PublicRoute(async (ctx) => {
+  return {
+    props: {},
+  };
+});
+
 const Styles = styled.div`
   .login-wrap {
     width: 100%;

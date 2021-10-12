@@ -1,37 +1,18 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Button } from "../../components/atoms/button";
+import  Button  from "../../components/atoms/button";
 import { Layout } from "../../components/molecules/layout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RegisterCustommer } from "../../Redux/Action/CustommerActions";
 import { useDispatch } from "react-redux";
+import { PublicRoute } from "../../Route/PublicRoute";
 const Register = () => {
   const router = useRouter();
   // const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const dispatch = useDispatch();
-  // const onSubmit = (data, e) =>{
-  //   e.preventDefault()
-  //   axios.post('http://localhost:4000/v1/authcust/register', data)
-  //   .then((res)=>{
-  //     console.log(res);
-  //     alert('success | check your email to activate your account')
-  //     // Swal.fire(
-  //     //   'Register Success!',
-  //     //   'Check your email to activate your account!',
-  //     //   'success'
-  //     // )
-  //   })
-  //   .catch((err)=>{
-  //     console.log(err);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Oops...',
-  //       text: 'Something went wrong!',
-  //     })
-  //   })
-  // }
+ 
   const handlePushLogin = () =>{
 
     router.push('/auth_user')
@@ -167,6 +148,12 @@ const Register = () => {
 };
 
 export default Register;
+export const getServerSideProps = PublicRoute(async (ctx) => {
+  return {
+    props: {},
+  };
+});
+
 const Styles = styled.div`
   .main-wrapper {
     .row-wrap {

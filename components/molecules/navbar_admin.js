@@ -3,10 +3,9 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 const NavbarAdmin = () => {
-
-  // const profileState = useSelector(state => state.custommer)
-  // const avatar = profileState?.profile?.image
-  // const profile = localStorage.getItem('image')
+  const profileState = useSelector((state) => state.Admin);
+  const avatar = profileState?.profile?.image;
+  const profile = localStorage.getItem("image");
   return (
     <Styles>
       <div className="container">
@@ -37,7 +36,7 @@ const NavbarAdmin = () => {
               </Link>
             </li>
             <li>
-            <Link href="/adminPage/historyAdmin">
+              <Link href="/adminPage/historyAdmin">
                 <a>History</a>
               </Link>
             </li>
@@ -52,15 +51,18 @@ const NavbarAdmin = () => {
               </a>
             </li>
             <li>
-              <Link href="/profile_user">
+              <Link href="/profileAdmin">
                 <a>
-                  <img className="image" src="/image 39.png" alt="" />
-                  {/* <img className="image" src={avatar ? avatar : profile ? profile : "/image 39.png"} alt="" /> */}
+                  {/* <img className="image" src="/image 39.png" alt="" /> */}
+                  <img
+                    className="image"
+                    src={avatar ? avatar : profile ? profile : "/image 39.png"}
+                    alt=""
+                  />
                 </a>
               </Link>
             </li>
           </ul>
-  
         </nav>
       </div>
     </Styles>
@@ -88,6 +90,18 @@ const Styles = styled.div`
       /* background-color: turquoise; */
       margin: 0;
       list-style: none;
+      @media screen and (max-width: 600px) {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        margin-left: 0;
+        left: -100%;
+        top: 80px;
+        background-color: rgb(240, 246, 247);
+        color: black;
+        text-align: center;
+        transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
       @media screen and (max-width: 992px) {
         position: fixed;
         width: 100%;
@@ -166,6 +180,5 @@ const Styles = styled.div`
         display: block;
       }
     }
-
   }
 `;

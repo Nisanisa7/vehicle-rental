@@ -1,86 +1,90 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import { useRouter } from 'next/dist/client/router'
-import Link from 'next/link';
+import { useRouter } from "next/dist/client/router";
+import Link from "next/link";
 const Navbar_Bf_Login = () => {
-  const router = useRouter()
+  const router = useRouter();
   // const handlePushLogin = () =>{
   //     router.push('/auth_user/')
   // }
   return (
     <Styles>
-			<div className="container">
-				<nav>
-						<div className="logo">
-							<img
-								src="/Footer-image.png"
-								alt="footer"
-								width="43px"
-								height="43px"
-							/>
-						</div>
+      <div className="container">
+        <nav>
+          <div className="logo">
+            <img
+              src="/Footer-image.png"
+              alt="footer"
+              width="43px"
+              height="43px"
+            />
+          </div>
 
-						<input type="checkbox" id="check" />
-						<label for="check">
-							<i className="fa fa-bars" aria-hidden="true" id="btn"></i>
-							<i className="fa fa-times" aria-hidden="true" id="close"></i>
-						</label>
-						<ul>
-							<li>
-								<a href="">Home</a>
-							</li>
-							<li>
-								<a href="">Vehicle Type</a>
-							</li>
-							<li>
-								<a href="/product_page/history">History</a>
-							</li>
-							<li>
-								<a href="">About</a>
-							</li>
-							<li>
-                <Link href="/auth_user">
+          <input type="checkbox" id="check" />
+          <label htmlFor="check">
+            <i className="fa fa-bars" aria-hidden="true" id="btn"></i>
+            <i className="fa fa-times" aria-hidden="true" id="close"></i>
+          </label>
+          <ul>
+            <li>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/product_page/vehicle_type">
+                <a>Vehicle_type</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/product_page/history">
+                <a>History</a>
+              </Link>
+            </li>
+            <li>
+              <a href="">About</a>
+            </li>
+            <li>
+              <Link href="/auth_user">
                 <a>
-                  
-									<input type="button" className="btn-login" value="Login" />
+                  <input type="button" className="btn-login" value="Login" />
                 </a>
-                </Link>
-							</li>
-							<li>
-								<a href="">
-									<input type="submit" className="btn-sign" value="Sign up" />
-								</a>
-							</li>
-						</ul>
-				</nav>
-			</div>
+              </Link>
+            </li>
+            <li>
+              <a href="">
+                <input type="submit" className="btn-sign" value="Sign up" />
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </Styles>
   );
 };
 
 export default Navbar_Bf_Login;
 const Styles = styled.div`
-	
-	width: 100%;
+  width: 100%;
   height: 90px;
   background-color: #ffff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   nav {
     display: flex;
-		align-items: center;
-		justify-content: space-between;
+    align-items: center;
+    justify-content: space-between;
     flex-direction: row;
-		width: 100%;
+    width: 100%;
 
     .logo {
       /* background-color: violet; */
-     display: inline-block;
+      display: inline-block;
     }
     ul {
       /* background-color: turquoise; */
       margin: 0;
-			list-style: none;
+      list-style: none;
       @media screen and (max-width: 992px) {
         position: fixed;
         width: 100%;
@@ -89,7 +93,7 @@ const Styles = styled.div`
         left: -100%;
         top: 80px;
         background-color: rgb(240, 246, 247);
-				color: black;
+        color: black;
         text-align: center;
         transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
@@ -186,7 +190,7 @@ const Styles = styled.div`
     }
     #check:checked ~ label #close {
       @media screen and (max-width: 992px) {
-				display: block;
+        display: block;
       }
     }
   }

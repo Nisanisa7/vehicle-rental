@@ -6,13 +6,14 @@ import Link from "next/link";
 import Footer from "../../components/molecules/footer";
 import axios from "axios";
 import { Layout } from "../../components/molecules/layout";
-
+import { PrivateRoute } from "../../Route/PrivateRoute";
+import cookies from 'next-cookies';
 const Vehicle_type = () => {
   const [category, setCategory] = useState([]);
   const [search, setSearch] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:4000/v1/vehicle")
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
       .then((data) => {
         setCategory(data.data.item);
       })
@@ -64,7 +65,7 @@ const Vehicle_type = () => {
                           <a className="view">
                             View all{" "}
                             <i
-                              class="fa fa-chevron-right"
+                              className="fa fa-chevron-right"
                               aria-hidden="true"
                             ></i>
                           </a>
@@ -96,6 +97,25 @@ const Vehicle_type = () => {
 };
 
 export default Vehicle_type;
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  try {
+    const token = await cookies(ctx).token;
+    const role = await cookies(ctx).user_role;
+    let isCustommer = '';
+    if (role === 'custommer') {
+      isCustommer = true;
+    }
+    return{
+      props: {
+        role: role,
+        token: token,
+        isCustommer: isCustommer,
+      }
+    };
+  } catch (error) {
+    console.log(error);
+  }
+});
 const Styles = styled.div`
 .search{
     position: relative;

@@ -7,18 +7,18 @@ export const addOrder = (data, totalPrice, date, day) => async (dispatch, getSta
     dispatch({type: 'ADD_ORDER', payload:cartData});
 }
 
-export const inputBook = (idCustommer, vehicle_name, totalprice, amount, rentalDay, image, reservationDate, payment, router) =>(dispatch, getState)=>{
+export const inputBook = (idCustommer, vehicle_name, totalprice, amount, rentalDay, image_order, reservationDate, payment, router) =>(dispatch, getState)=>{
     const dataBook = {
         idCustommer, 
         vehicle_name,
         totalprice, 
         amount, 
         rentalDay, 
-        image, 
+        image_order, 
         reservationDate, 
         payment
     }
-    axios.post(`http://localhost:4000/v1/order`, dataBook)
+    axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/order`, dataBook)
     .then((result)=>{
         const resultBook = result.data.data;
         dispatch({ type: "INPUT_ORDER", payload: resultBook });

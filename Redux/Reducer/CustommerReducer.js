@@ -29,6 +29,10 @@ const CustommerReducer = (state = initialState, action) => {
                 ...action.payload
                 },
             }
+        case 'REMOVE_STATE':
+            return {
+                profile: {}
+            };    
         default:
             return state
     }

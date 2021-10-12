@@ -3,10 +3,12 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import cookies from 'next-cookies';
 import Footer from "../../components/molecules/footer";
 import Navbar_after_login from "../../components/molecules/navbar_after_login";
 import { addCart } from "../../Redux/Action/CartActions";
 import { addOrder } from "../../Redux/Action/OrderAction";
+import { PrivateRoute } from "../../Route/PrivateRoute";
 
 
 const Reservation = () => {
@@ -95,6 +97,25 @@ const Reservation = () => {
 };
 
 export default Reservation;
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  try {
+    const token = await cookies(ctx).token;
+    const role = await cookies(ctx).user_role;
+    let isCustommer = '';
+    if (role === 'custommer') {
+      isCustommer = true;
+    }
+    return{
+      props: {
+        role: role,
+        token: token,
+        isCustommer: isCustommer,
+      }
+    };
+  } catch (error) {
+    console.log(error);
+  }
+});
 const Styles = styled.div`
   .back-wrapper {
     .backButton {

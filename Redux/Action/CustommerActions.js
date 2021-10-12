@@ -4,13 +4,14 @@ import * as Types from "../types";
 
 export const LoginCust = (data, router) => (dispatch) => {
   axios
-    .post("http://localhost:4000/v1/authcust/login", data, {
+    .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authcust/login`, data, {
       withCredentials: true,
     })
     .then((res) => {
       const isAuth = true;
       const status = res.data.data.status;
       const role = res.data.data.role;
+      const email = res.data.data.email;
       const idCustommer = res.data.data.idCustommer;
       const image = res.data.data.image;
       const token = res.data.data.token;
@@ -29,6 +30,7 @@ export const LoginCust = (data, router) => (dispatch) => {
       localStorage.setItem("status", status);
       localStorage.setItem("isAuth", isAuth);
       localStorage.setItem("role", role);
+      localStorage.setItem("email", email);
       localStorage.setItem("idCustommer", idCustommer);
       localStorage.setItem("image", image);
       localStorage.setItem("createdAt", createdAt);
@@ -47,13 +49,13 @@ export const LoginCust = (data, router) => (dispatch) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error?.response?.data?.message || 'login',
+        text: error?.response?.data?.message || 'login error',
       });
     });
 };
 
 export const RegisterCustommer = (data, router) => (dispatch) => {
-  axios.post("http://localhost:4000/v1/authcust/register", data)
+  axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/authcust/register`, data)
   .then((res) => {
     const result = res.data.data;
     dispatch({ type: Types.CUST_REGISTER, payload: result });
@@ -84,7 +86,7 @@ export const updateProfile = (data, idCustommer) => (dispatch) =>{
   formData.append('datebirth', data.datebirth)
   formData.append('image', data.image)
 
-  axios.patch(`http://localhost:4000/v1/user/${idCustommer}`, formData)
+  axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/user/${idCustommer}`, formData)
   .then((res)=>{
     const ResultData = res.data.data
     dispatch({type: Types.UPDATE_CUSTOMMER, payload: ResultData})

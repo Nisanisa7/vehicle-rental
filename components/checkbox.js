@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Checkbox = ({className, name, checked, onChange}) => {
+const Checkbox = ({className, name, checked, onChange, value, defaultChecked}) => {
     return (
         <Styles className={className}>
              <input type="checkbox"
              className="checkS" 
              name={name}
+             value={value}
              checked={checked}
              onChange={onChange} 
+             defaultChecked={defaultChecked} 
               />
         </Styles>
     )

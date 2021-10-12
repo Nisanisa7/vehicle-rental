@@ -2,33 +2,38 @@ import FormData from "form-data";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Inputfield from "../../../components/atoms/inputfield";
-
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/dist/client/router";
 import NavbarAdmin from "../../../components/molecules/navbar_admin";
 import Head from "next/head"
-
-const EditItem = () => {
+import cookies from 'next-cookies';
+import { PrivateRouteAdmin } from "../../../Route/PrivateRouteAdmin";
+const EditItem = ({detail}) => {
   const router = useRouter();
+  const { query } = useRouter();
+  const idvahicle = Number(query.idVehicle);
+  const [errSize, setErrSize] = useState(false);
+  const [errType, setErrType] = useState(false);
+  console.log(idvahicle);
   const headers = {
     "Content-Type": "form-data",
   };
   const [form, setForm] = useState({
-    vehicle_name: "",
-    location: "",
-    description: "",
-    price: "",
-    status: "Available",
-    stock: "",
-    id: "",
-    image: "",
+    vehicle_name: detail.vehicle_name,
+    location: detail.location,
+    description: detail.description,
+    price: detail.price,
+    status: detail.status,
+    stock: detail.stock,
+    id: detail.id,
+    image: detail.image,
     imagePreview: null,
   });
   const [items, setItems] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/v1/vehicle_type/")
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle_type/`)
       .then((res) => {
         setItems(res.data.data);
       })
@@ -37,17 +42,29 @@ const EditItem = () => {
       });
   }, []);
   const handleShowImage = (e) => {
-    setForm({
+    e.preventDefault();
+    if (e.target.files[0].size > 2000000) {
+      setErrSize(true);
+      setErrType(false);
+    } else if (
+      e.target.files[0].type !== "image/png" &&
+      e.target.files[0].type !== "image/jpg" &&
+      e.target.files[0].type !== "image/jpeg"
+    ) {
+      setErrType(true);
+      setErrSize(false);
+     } else if (e.target.files.length !== 0) {
+      setErrSize(false);
+      setErrType(false);
+       setForm({
       ...form,
       image: e.target.files[0],
       imagePreview: URL.createObjectURL(e.target.files[0]),
     });
+  }
   };
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value,});
   };
   // let formData = new FormData([form]);
   const formData = new FormData();
@@ -64,10 +81,10 @@ const EditItem = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/v1/vehicle", formData)
+      .put(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idvahicle}`, formData)
       .then((res) => {
         console.log(res);
-        Swal.fire("Success!", "Data has been added!", "success");
+        Swal.fire("Success!", "Data has been Updated!", "success");
         router.push("/adminPage/homeAfterLogin");
       })
       .catch((err) => {
@@ -78,14 +95,13 @@ const EditItem = () => {
         });
       });
   };
-  // const { register, handleSubmit, formState: { errors } } = useForm({
-  //   resolver: yupResolver(schema),
-  // });
+ 
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:4000/v1/vehicle/${query.idVehicle}`)
+      .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idvahicle}`)
       .then((res) => {
-        alert("delete", push.router("/adminPage/homeAfterLogin"));
+        Swal.fire("Success!", "Data has been added!", "success");
+        router.push("/adminPage/homeAfterLogin");
       })
       .catch((err) => {
         Swal.fire({
@@ -95,6 +111,9 @@ const EditItem = () => {
         });
       });
   };
+  const handleBack = () =>{
+    router.push(`/adminPage/detail/${idvahicle}`)
+  }
   return (
     <Styles>
       {/* <p>{JSON.stringify(dataVehicle)}</p> */}
@@ -105,16 +124,16 @@ const EditItem = () => {
       </Head>
       <div className="container">
         <div className="back-wrapper">
-          <button type="submit" className="backButton">
+          <button type="submit" className="backButton" onClick={handleBack}>
             <i className="fa fa-chevron-left fa-3x"></i>
             <p>Edit Item</p>
           </button>
-          <button type="submit" className="delete-btn">
+          <button type="submit" className="delete-btn" onClick={handleDelete}>
             Delete
           </button>
         </div>
       </div>
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+      <form onSubmit={handleSubmit}>
       <div className="container">
         <div className="row ">
           <div className="col">
@@ -122,13 +141,14 @@ const EditItem = () => {
               className="input-field"
               label="Name (max up to 50 words)"
               name="vehicle_name"
-              onChange={handleChange}
+              value={form.vehicle_name}
+              onChange={(e) => handleChange(e)}
               type="text"
             />
             {/* <label className="error">{errors.vehicle_name?.message}</label> */}
             <div className="image-content">
               <div className="image-main">
-                <img className="images" src={form.imagePreview} alt="" />
+                <img className="images" src={form.imagePreview ? form.imagePreview : detail.image ? detail.image : null} alt="" />
               </div>
               <div className="d-flex thumbnail-group">
                 <div className="thumbnail-image"></div>
@@ -146,22 +166,40 @@ const EditItem = () => {
                 </div>
               </div>
             </div>
+              {errSize ? (
+                <p className="error">
+                  Image size is too large. max 1mb
+                </p>
+              ) : (
+                ""
+              )}
+              {errType ? (
+                <p className="error">
+                  Invalid file type. only png, jpg, and jpeg format
+                  allowed
+                </p>
+              ) : (
+                ""
+              )}
           </div>
           <div className="col">
             <div className="form">
               <Inputfield
                 className="input-location"
                 // value={dataVehicle.location}
+                value={form.location}
                 name="location"
-                onChange={handleChange}
+                
+                onChange={(e) => handleChange(e)}
                 type="text"
               />
               {/* <label className="error">{errors.location?.message}</label> */}
               <Inputfield
                 className="input-description"
                 label="Description (max up to 150 words)"
+                value={form.description}
                 name="description"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 type="text"
               />
               {/* <label className="error">{errors.description?.message}</label> */}
@@ -169,18 +207,20 @@ const EditItem = () => {
               <input
                 className="input-Text"
                 type="text"
+                value={form.price}
                 name="price"
                 placeholder="Type the price"
                 id=""
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
               />
 
               <h5>Status :</h5>
               <select
                 className="custom-select button-status"
-                name="id"
+                // value={form.}
+                name="status"
                 id="inputGroupSelect01"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
               >
                 {/* {items.map((item) => ( */}
                 <option value="Available">Available</option>
@@ -192,10 +232,11 @@ const EditItem = () => {
               <input
                 className="input-Text"
                 type="text"
+                value={form.stock}
                 name="stock"
-                placeholder="Type the price"
+                placeholder="Type Stock"
                 id=""
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
               />
               {/* <label className="error">{errors.stock?.message}</label> */}
             </div>
@@ -207,13 +248,14 @@ const EditItem = () => {
           <div className="col-lg-6 col-md-4 ">
             <select
               className="custom-select"
+              // value={form.}
               name="id"
               id="inputGroupSelect01"
-              onChange={handleChange}
+              onChange={() => handleChange()}
             >
-              {/* {items.map((item) => ( */}
-              <option value="">Halo</option>
-              {/* ))} */}
+                {items.map((item) => (
+                <option value={item.id}>{item.name}</option>
+              ))}
             </select>
           </div>
           {/* <div className="col-lg-5 col-md-4">
@@ -221,27 +263,31 @@ const EditItem = () => {
           </div> */}
           <div className="col-lg-6 col-md-4">
             {/* <button type="submit" className="btn-save">Save item</button> */}
-            <button className="btn-save" color="shine">
+            <button className="btn-save" color="shine" type="submit">
               Save Changes
             </button>
           </div>
         </div>
       </div>
-      {/* </form> */}
+      </form>
     </Styles>
   );
 };
-// export const getServerSideProps = async (context) => {
-//   const { idVehicle } = context.query.idVehicle;
-//   const { data } = await axios.get(
-//     `http://localhost:4000/v1/vehicle/${idVehicle}`
-//   );
-//   return {
-//     props: {
-//       dataVehicle: data.data,
-//     },
-//   };
-// };
+export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+  const { idVehicle } = ctx.query;
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isAdmin = '';
+  if (role === 'admin') {
+    isAdmin = true;
+  }
+  const  result  = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idVehicle}`);
+  const [detail] = result.data.data
+  return {
+    props: { token,  isAdmin: isAdmin, detail},
+  
+  };
+});
 export default EditItem;
 const Styles = styled.div`
   .back-wrapper {

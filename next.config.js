@@ -1,7 +1,7 @@
 module.exports = {
     reactStrictMode: true,
     env: {
-        BASE_URL: process.env.BASE_URL,
+        NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     },
     images: {
     //   domains: [process.env.NEXT_PUBLIC_WEB_URL, process.env.NEXT_PUBLIC_BASE_URL],

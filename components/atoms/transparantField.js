@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TransparantField = ({
+const TransparantField = ({
   className,
   type,
   placeholder,
@@ -20,6 +20,7 @@ export const TransparantField = ({
     </Style>
   );
 };
+export default TransparantField
 const Style = styled.div`
 input{
     width: 100%;

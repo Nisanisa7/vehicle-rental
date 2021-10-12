@@ -5,16 +5,18 @@ import styled from "styled-components";
 import Footer from "../../components/molecules/footer";
 import Inputfield from "../../components/atoms/inputfield";
 import Head from "next/head";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Navbar_after_login from "../../components/molecules/navbar_after_login";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../../Redux/Action/CustommerActions";
-
+import Swal from "sweetalert2";
+import { PrivateRoute } from "../../Route/PrivateRoute";
+import cookies from 'next-cookies';
 const Profile = ({ custommer }) => {
   const dispatch = useDispatch();
+  const router = useRouter()
   const Profile = useSelector((state) => state.custommer.profile);
   const DateJoined = localStorage.getItem('createdAt')
   const id = localStorage.getItem('idCustommer')
@@ -34,8 +36,18 @@ const Profile = ({ custommer }) => {
     });
   };
 
-  const handleCancel = () => {
-    router.push("/adminPage/homeAfterLogin");
+  const handleLogout = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/authcust/logout`,  { withCredentials: true })
+    .then((res)=>{
+      localStorage.clear();
+      window.location.href = "/"
+      dispatch({type: 'REMOVE_STATE', payload: {}})
+      Swal.fire('Success', "you're logged out ! see ya", 'success');
+      router.push("/");
+    })
+    .res((err)=>{
+      console.log(err);
+    })
   };
   const handleShowImage = (e) => {
     e.preventDefault();
@@ -92,7 +104,7 @@ const Profile = ({ custommer }) => {
 
             <div className="profile-btn">
               <input id="upload" type="file" name="image" onChange={handleShowImage} />
-              <label className="button" for="upload">
+              <label className="button" htmlFor="upload">
                 <i className="fa fa-pencil" aria-hidden="true"></i>
               </label>
               {/* <button>
@@ -100,6 +112,21 @@ const Profile = ({ custommer }) => {
                                 </button> */}
             </div>
           </div>
+          {errSize ? (
+              <p className="error">
+                Image size is too large. <br /> max 1mb
+              </p>
+            ) : (
+              ""
+            )}
+            {errType ? (
+              <p className="error">
+                Invalid file type. <br /> only png, jpg, and jpeg <br /> format
+                allowed
+              </p>
+            ) : (
+              ""
+            )}
           <h1 className="username">{Profile.name}</h1>
           <div className="text-wrap">
             <h6>{Profile.email}</h6>
@@ -117,7 +144,7 @@ const Profile = ({ custommer }) => {
                 checked={Profile.gender === "male"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" for="flexRadioDefault1">
+              <label className="form-check-label" htmlFor="flexRadioDefault1">
                 Male
               </label>
             </div>
@@ -131,7 +158,7 @@ const Profile = ({ custommer }) => {
                 checked={Profile.gender === "female"}
                 onChange={handleChange}
               />
-              <label className="form-check-label" for="flexRadioDefault2">
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
                 Female
               </label>
             </div>
@@ -196,8 +223,8 @@ const Profile = ({ custommer }) => {
               <button className="btn-password">Edit Password</button>
             </div>
             <div className="col col-md-4">
-              <button className="btn-cancel" onClick={handleCancel}>
-                Cancel
+              <button className="btn-cancel" onClick={handleLogout}>
+                Logout
               </button>
             </div>
           </div>
@@ -209,27 +236,25 @@ const Profile = ({ custommer }) => {
     </Styles>
   );
 };
-// export const getServerSideProps = async (context) => {
-//     try {
-//       const cookie = context.req.headers.cookie;
-//     //   console.log(cookie);
-//       const user = await axios.get(`http://localhost:4000/v1/authcust/checktoken`, {
-//         withCredentials: true,
-//         headers: {cookie},
-//       });
-
-//       return {
-//         props: {
-//             custommer: user.data.data
-//         }
-//       };
-//     } catch (error) {
-//       console.log(error);
-//       return {
-//         props: {},
-//       };
-//     }
-//   };
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  try {
+    const token = await cookies(ctx).token;
+    const role = await cookies(ctx).user_role;
+    let isCustommer = '';
+    if (role === 'custommer') {
+      isCustommer = true;
+    }
+    return{
+      props: {
+        role: role,
+        token: token,
+        isCustommer: isCustommer,
+      }
+    };
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export default Profile;
 const Styles = styled.div`
@@ -428,4 +453,13 @@ const Styles = styled.div`
   .footer {
     margin-top: 100px;
   }
+  .error {
+    color: red;
+      text-align: center;
+      font-size: 20px;
+      font-family:"Nunito";
+      line-height: 24px;
+      font-weight: bold;
+      margin-top: 50px;
+    }
 `;

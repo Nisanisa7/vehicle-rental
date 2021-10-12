@@ -8,13 +8,9 @@ import Card from "../components/card";
 import Footer from "../components/molecules/footer";
 import Navbar_after_login from "../components/molecules/navbar_after_login";
 import axios from "axios";
-export const getStaticProps = async () => {
-  const dataLocation = await axios.get("http://localhost:4000/v1/location");
-  return {
-    props: { getCity: dataLocation.data },
-  };
-};
-const home = ({ getCity }) => {
+import { PrivateRoute } from "../Route/PrivateRoute";
+import cookies from 'next-cookies';
+const home = () => {
   return (
     <Styles>
       {/* <p>{JSON.stringify(getCity)}</p> */}
@@ -178,6 +174,19 @@ const home = ({ getCity }) => {
 };
 
 export default home;
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+    const token = await cookies(ctx).token;
+    const role = await cookies(ctx).user_role;
+    let isCustommer = '';
+    if (role === 'custommer') {
+      isCustommer = true;
+    }
+    return{
+      props: { role, token, isCustommer: isCustommer,}
+    };
+  
+})
+  
 const Styles = styled.div`
   .banner {
     height: 50%;

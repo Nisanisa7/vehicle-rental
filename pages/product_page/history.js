@@ -9,24 +9,51 @@ import Checkbox from "../../components/checkbox";
 import Footer from "../../components/molecules/footer";
 import Navbar_after_login from "../../components/molecules/navbar_after_login";
 import Navbar_Bf_Login from "../../components/molecules/navbar_after_login";
-
+import { PrivateRoute } from "../../Route/PrivateRoute";
+import cookies from "next-cookies";
 const History = () => {
-  const [checked, setChecked] = useState(false);
-  const idCustommer = localStorage.getItem('idCustommer')
-  const [orders, setOrders] = useState([])
-  const handleShow = () => {
-    setChecked(!checked);
-  };
+
+  const idCustommer = localStorage.getItem("idCustommer");
+  const [orders, setOrders] = useState([]);
+  const [sort, setSort] = useState('')
   useEffect(() => {
-    axios.get(`http://localhost:4000/v1/order/custommer/`+idCustommer)
-    .then((res) => {
-        setOrders(res.data.data)
-    })
-    .catch((err) => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/order/custommer/` + idCustommer)
+      .then((res) => {
+        setOrders(res.data.data);
+      })
+      .catch((err) => {
         console.log(err);
-    })
-  }, [])
-  console.log(orders);
+      });
+  }, []);
+  const handleDelete = (idbooking) =>{
+    console.log(idbooking);
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/order/`+idbooking)
+      .then(() => {
+        Swal.fire("delete Succes", "order history has been deleted", "success");
+        axios
+          .get(`${process.env.NEXT_PUBLIC_BASE_URL}/order/`)
+          .then((res) => {
+            setOrders(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response?.data?.message,
+        });
+      });
+  }
+  const handleSort = async(e) =>{
+    setSort(e.target.value)
+    const {data} = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/order?${e.target.value}`)
+    setOrders(data.data)
+  }
   return (
     <Styles>
       <Navbar_after_login />
@@ -47,10 +74,14 @@ const History = () => {
                       <i className="fa fa-search fa-2x"></i>
                     </button>
                   </div>
-                  <div className="text-select">Select</div>
                 </div>
                 <div className="select" tabIndex="1">
-                  <input
+                <select className="form-select selectopt" onChange={(e) => handleSort(e)}>
+                        <option selected disabled >filter</option>
+                        <option value="sortBy=reservationDate&sort=DESC">Date</option>
+                        <option value="sortBy=vehicle_name&sort=DESC">Name</option>
+                    </select>         
+                  {/* <input
                     className="selectopt"
                     name="test"
                     type="radio"
@@ -83,34 +114,35 @@ const History = () => {
                     name="test"
                     type="radio"
                     id="opt4"
-                  />
-                  <label htmlFor="opt4" className="option">
-                    Favorite Product
-                  </label>
+                  /> */}
                 </div>
                 {orders.map((item, index) => (
-                    <>
-                <div className="item-wrapper">
-                  <Cardwrapper className="card-wrapper">
-                    <div className="wrapper-profile">
-                      <div className="image-wrapper">
-                        <img src={item.image} alt="" />
-                      </div>
-                      <div className="detail-profile-wrap">
-                        <h5 className="text-name">{item.vehicle_name}</h5>
-                        <p>{item.reservationDate}</p>
-                        <h5>Prepayment : {item.totalprice}</h5>
-                        <p className="status-rental">{item.status}</p>
+                  <>
+                    <div className="item-wrapper">
+                      <Cardwrapper className="card-wrapper">
+                        <div className="wrapper-profile">
+                          <div className="image-wrapper">
+                            <img src={item.image_order} alt="" />
+                          </div>
+                          <div className="detail-profile-wrap">
+                            <h5 className="text-name">{item.vehicle_name}</h5>
+                            <p>{item.reservationDate}</p>
+                            <h5>Prepayment : {item.totalprice}</h5>
+                            <p className={item.status_order === 'On Going Rent' || item.status_order === "Payment Finished and Taked" ? "status-rental" : item.status_order === 'Payment Finished Waiting to Taked' || item.status_order === "Payment Pending" ? "pending" : item.status_order === 'Returned' ? 'primary' : 'cancel'}>{item.status_order}</p>
+                          </div>
+                        </div>
+                      </Cardwrapper>
+                      <div className="check-second">
+                      {item.status_order === 'Returned' ?
+                      <button  onClick={() => handleDelete(item.idbooking)} className="btn-delete">
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                      : null}
                       </div>
                     </div>
-                  </Cardwrapper>
-                  <div className="check-second">
-                    <Checkbox />
-                  </div>
-                </div>
-                    </>
+                  </>
+                
                 ))}
-                <button className="btn-pay">Delete Selected Item</button>
               </div>
             </div>
           </div>
@@ -146,6 +178,25 @@ const History = () => {
 };
 
 export default History;
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  try {
+    const token = await cookies(ctx).token;
+    const role = await cookies(ctx).user_role;
+    let isCustommer = "";
+    if (role === "custommer") {
+      isCustommer = true;
+    }
+    return {
+      props: {
+        role: role,
+        token: token,
+        isCustommer: isCustommer,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+});
 const Styles = styled.div`
   .wrapper {
     margin-top: 25px;
@@ -194,12 +245,12 @@ const Styles = styled.div`
             }
           }
           .text-select {
-            font-family: 'Poppins';
+            font-family: "Poppins";
             font-style: normal;
             font-weight: normal;
             font-size: 24px;
             line-height: 36px;
-             margin-left: 9%;
+            margin-left: 9%;
             color: #393939;
           }
         }
@@ -282,33 +333,36 @@ const Styles = styled.div`
         }
         .item-wrapper {
           display: flex;
+          width: 90%;
           flex-direction: row;
           align-items: center;
           flex-wrap: nowrap;
-          .card-wrapper {
-            height: 100%;
-            width: 65%;
-            padding-top: 20px;
-            margin-top: 25px;
-          }
           .check-second {
             margin-left: 19%;
           }
-        }
+          .card-wrapper {
+            padding-top: 20px;
+            margin-top: 25px;
+            height: 210px;
+            width: 550px;   
         .wrapper-profile {
           display: flex;
           flex-direction: row;
         }
         .image-wrapper {
-          width: 197px;
-          height: 165px;
-          margin-left: 20px;
-          border-radius: 10px;
+          width: 120px;
+              height: 99px;
+              margin-top: 5%;
+              margin-left: 20px;
+              border-radius: 10px;
+              img {
+                border-radius: 20px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
         }
-        .image-wrapper img {
-          border-radius: 20px;
-          width: 100%;
-        }
+      
         .detail-profile-wrap {
           padding-top: 10px;
           margin-left: 20px;
@@ -316,10 +370,40 @@ const Styles = styled.div`
           /* width: 200px; */
         }
         .status-rental {
-          color: #00ff00;
-        }
+            color: #00ff00;
+          }
+          .pending{
+            color: #FFCD61;
+          }
+          .primary{
+            color: #6b83f883;
+          }
+          .cancel{
+            color: red;
+          }
+      }
+      }
         .card-history {
           margin-top: 35px;
+        }
+        .btn-delete {
+          margin-top: 90px;
+          width: 65px;
+          height: 65px;
+          background: none;
+          outline: none;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+          border-radius: 10px;
+          color: #393939;
+          font-family: "Nunito";
+          font-style: normal;
+          font-weight: 900;
+          font-size: 20px;
+          line-height: 25px;
+          border: none;
+          .fa{
+            color: red;
+          }
         }
         .btn-pay {
           margin-top: 90px;

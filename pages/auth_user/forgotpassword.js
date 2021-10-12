@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from '../../components/atoms/button'
+import  Button  from '../../components/atoms/button'
 import { Layout } from '../../components/molecules/layout'
 
 const Forgotpassword = () => {

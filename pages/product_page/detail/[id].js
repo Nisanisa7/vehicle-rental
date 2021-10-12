@@ -1,30 +1,17 @@
 import React, { useRef, useState } from "react";
-import Flickity from "react-flickity-component";
 import styled from "styled-components";
 import Navbar_after_login from "../../../components/molecules/navbar_after_login";
-
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/thumbs/thumbs.min.css";
-import router, { useRouter } from "next/router";
-// import "./styles.css";
-
-// import Swiper core and required modules
-import SwiperCore, { Navigation, Thumbs } from "swiper/core";
+import router from "next/router";
 import Footer from "../../../components/molecules/footer";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addCart } from "../../../Redux/Action/CartActions";
-// import { Layout } from "../../components/molecules/layout";
-// install Swiper modules
-SwiperCore.use([Navigation, Thumbs]);
+import cookies from 'next-cookies';
+import { PrivateRoute } from "../../../Route/PrivateRoute";
+
 
 const Detail_vehicle = ({ detail }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
   const handleBack = () => {
@@ -59,16 +46,18 @@ const Detail_vehicle = ({ detail }) => {
             <p>Detail</p>
           </button>
         </div>
-        <div className="main-wrapper">
+        <div className="row main-wrapper">
+        <div className="col">
           <div className="thumbnail">
             <img src={detail.image} alt="" className="image"/>
           </div>
+          </div>
+          <div className="col">
           <div className="detail-product">
             <h1 className="title-name">{detail.vehicle_name}</h1>
             <h3 className="town-title">{detail.location}</h3>
             <h6 className={detail.status === 'Booked' ? "booked" : "available"}>{detail.status}</h6>
             <div className="item-detail">
-              <span>Capacity : 1 person</span> <br />
               <span>Type : {detail.id}</span> <br />
               <span>{detail.description}</span>
             </div>
@@ -90,42 +79,55 @@ const Detail_vehicle = ({ detail }) => {
             </div>
           </div>
         </div>
-        <div className="button-content">
+        </div>
+        <div className="row button-content">
+        <div className="col-lg-4 col-md-4">
           <button type="submit" className="btn-chat">
             Chat Admin
           </button>
+          </div>
+           <div className="col-lg-4 col-md-4">
           <button type="button" disabled={detail.status === "Booked"} onClick={handleAdd} className="btn-reservation">
             Reservation
           </button>
+          </div>
+          <div className="col-lg-4 col-md-4">
           <button type="submit" className="btn-like">
             <i className="fa fa-heart fa-2x" aria-hidden="true">
               <label>Like</label>
             </i>
           </button>
+          </div>
         </div>
       </div>
       <Footer className="footer" />
     </Styles>
   );
 };
-export const getServerSideProps = async (context) => {
-  const { id } = context.query;
-  const { data } = await axios.get(`http://localhost:4000/v1/vehicle/${id}`);
+export const getServerSideProps = PrivateRoute(async (ctx) => {
+  const { id } = ctx.query;
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isCustommer = '';
+  if (role === 'custommer') {
+    isCustommer = true;
+  }
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${id}`);
   return {
     props: {
       detail: data.data[0],
+      role: role,
+      token: token,
+      isCustommer: isCustommer,
     },
   };
-};
+});
 
 export default Detail_vehicle;
+
 const Styles = styled.div`
   .main-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
     margin-top: 120px;
-    gap: 100px;
     .thumbnail{
         width: 50%;
         object-fit: cover;
@@ -137,10 +139,10 @@ const Styles = styled.div`
             border-radius: 10px;
             }
         }
-    }
+    
     .detail-product {
       /* background: pink; */
-      width: 50%;
+      width: 100%;
       height: 100%;
 
       .title-name {
@@ -176,15 +178,7 @@ const Styles = styled.div`
         line-height: 25px;
         color: #087e0d;
       }
-      /* .title{
-            margin-top: 15px;
-            font-family: 'Nunito';
-            font-style: normal;
-            font-weight: 300;
-            font-size: 28px;
-            line-height: 24px;
-            color: #9B0A0A;
-        } */
+
       .item-detail {
         margin-top: 25px;
       }
@@ -204,11 +198,19 @@ const Styles = styled.div`
         font-weight: 900;
         font-size: 32px;
         color: #000000;
+        @media screen and (max-width: 920px) {
+            display: grid;
+            justify-content: center;
+        
+          }
       }
       .button-wrapper {
         display: flex;
         flex-direction: row;
         margin-top: 45px;
+        @media screen and (max-width: 920px) {
+            justify-content: center;
+          }
         .counter {
           margin-left: 140px;
           padding-top: 10px;
@@ -217,7 +219,6 @@ const Styles = styled.div`
           font-weight: 900;
           font-size: 30px;
           line-height: 25px;
-
           color: #000000;
         }
         .button-min {
@@ -245,8 +246,9 @@ const Styles = styled.div`
   .button-content {
     margin-top: 60px;
     .btn-chat {
-      width: 350px;
+      width: 100%;
       height: 69px;
+      margin-bottom: 20px;
       background: #393939;
       border-radius: 10px;
       outline: none;
@@ -259,10 +261,10 @@ const Styles = styled.div`
       line-height: 25px;
     }
     .btn-reservation {
-      margin-left: 35px;
-      width: 350px;
+      width: 100%;
       height: 69px;
       background: #ffcd61;
+      margin-bottom: 20px;
       border-radius: 10px;
       outline: none;
       border: 1px solid #ffcd61;
@@ -274,9 +276,9 @@ const Styles = styled.div`
       line-height: 25px;
     }
     .btn-like {
-      margin-left: 35px;
-      width: 320px;
+      width: 100%;
       height: 69px;
+      margin-bottom: 20px;
       background: #393939;
       border-radius: 10px;
       border: 1px solid #393939;
@@ -323,85 +325,5 @@ const Styles = styled.div`
       }
     }
   }
-  .swiper-container {
-    width: 100%;
-    height: 100%;
-  }
-
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-  }
-
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  body {
-    background: #000;
-    color: #000;
-  }
-
-  .swiper-container {
-    width: 100%;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .swiper-slide {
-    background-size: cover;
-    background-position: center;
-  }
-
-  .mySwiper2 {
-    height: 80%;
-    width: 100%;
-  }
-
-  .mySwiper {
-    height: 20%;
-    box-sizing: border-box;
-    padding: 10px 0;
-  }
-
-  .mySwiper .swiper-slide {
-    width: 25%;
-    height: 100%;
-    opacity: 0.4;
-  }
-
-  .mySwiper .swiper-slide-thumb-active {
-    opacity: 1;
-  }
-
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .footer {
-    margin-top: 50px;
-  }
-
+  
 `

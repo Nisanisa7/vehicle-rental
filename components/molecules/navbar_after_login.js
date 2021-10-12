@@ -37,7 +37,9 @@ const Navbar_after_login = () => {
               </Link>
             </li>
             <li>
-              <a href="">History</a>
+            <Link href="/product_page/history">
+                <a>History</a>
+              </Link>
             </li>
             <li>
               <a href="">About</a>

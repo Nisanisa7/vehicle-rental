@@ -7,6 +7,8 @@ import Card from '../../components/card'
 // import Footer from '../../components/footer'
 import { useRouter } from 'next/dist/client/router'
 import NavbarAdmin from '../../components/molecules/navbar_admin'
+import cookies from "next-cookies";
+import { PrivateRouteAdmin } from '../../Route/PrivateRouteAdmin'
 
 const HomeAfterLogin = () => {
     const router = useRouter()
@@ -85,7 +87,7 @@ const HomeAfterLogin = () => {
         <div className="d-flex justify-content-between">
           <h1>Popular in town</h1>
           <Link href="">
-            <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a className="view">View all <i className="fa fa-chevron-right" aria-hidden="true"></i></a>
           </Link>
         </div>
       </div>
@@ -117,7 +119,7 @@ const HomeAfterLogin = () => {
         <div className="d-flex justify-content-between">
           <h1>Testimonials</h1>
           <Link href="">
-            <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a className="view">View all <i className="fa fa-chevron-right" aria-hidden="true"></i></a>
           </Link>
         </div>
       </div>
@@ -151,6 +153,17 @@ const HomeAfterLogin = () => {
 }
 
 export default HomeAfterLogin
+export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isAdmin = '';
+  if (role === 'admin') {
+    isAdmin = true;
+  }
+  return{
+    props: { role, token, isAdmin: isAdmin,}
+  };
+});
 const Styles = styled.div`
 .banner {
     height: 50%;

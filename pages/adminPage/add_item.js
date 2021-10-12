@@ -6,8 +6,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/dist/client/router";
 import NavbarAdmin from "../../components/molecules/navbar_admin";
-
+import cookies from 'next-cookies'
+import { PrivateRouteAdmin } from "../../Route/PrivateRouteAdmin";
 const Add_item = () => {
+  const [empty, setEmpty] = useState(false)
+  const [errSize, setErrSize] = useState(false);
+  const [errType, setErrType] = useState(false);
   const router = useRouter();
   const headers = {
     "Content-Type": "form-data",
@@ -26,7 +30,7 @@ const Add_item = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/v1/vehicle_type/")
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle_type/`)
       .then((res) => {
         setItems(res.data.data);
       })
@@ -35,11 +39,41 @@ const Add_item = () => {
       });
   }, []);
   const handleShowImage = (e) => {
-    setForm({
+    e.preventDefault();
+    if (e.target.files[0].size > 2000000) {
+      setErrSize(true);
+      setErrType(false);
+    } else if (
+      e.target.files[0].type !== "image/png" &&
+      e.target.files[0].type !== "image/jpg" &&
+      e.target.files[0].type !== "image/jpeg"
+    ) {
+      setErrType(true);
+      setErrSize(false);
+     } else if(e.target.files.length === 0){
+      setEmpty(true)
+      setErrSize(false);
+      setErrType(false);
+     } 
+    else if (e.target.files.length !== 0) {
+      setErrSize(false);
+      setErrType(false);
+       setForm({
       ...form,
       image: e.target.files[0],
       imagePreview: URL.createObjectURL(e.target.files[0]),
     });
+  }
+  setForm({
+    ...form,
+    image: e.target.files[0],
+    imagePreview: URL.createObjectURL(e.target.files[0]),
+  });
+    // setForm({
+    //   ...form,
+    //   image: e.target.files[0],
+    //   imagePreview: URL.createObjectURL(e.target.files[0]),
+    // });
   };
   const handleChange = (e) => {
     setForm({
@@ -62,18 +96,19 @@ const Add_item = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/v1/vehicle", formData)
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`, formData)
       .then((res) => {
         console.log(!res.ok);
         Swal.fire("Success!", "Data has been added!", "success");
         router.push("/adminPage/homeAfterLogin");
       })
       .catch((err) => {
+        console.log(err.message, 'consoleerror');
         if (err.response) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: err.response.data.message,
+            text: err.message,
           });
           // client received an error response (5xx, 4xx)
         } else {
@@ -130,10 +165,35 @@ const Add_item = () => {
                     style={{ display: "none" }}
                     onChange={handleShowImage}
                   />
+             
                 </div>
+                
               </div>
+              {empty ? (
+                <p className="error">
+                  Image Can't be empty
+                </p>
+              ) : (
+                ""
+              )}
+              {errSize ? (
+                <p className="error">
+                  Image size is too large. max 1mb
+                </p>
+              ) : (
+                ""
+              )}
+              {errType ? (
+                <p className="error">
+                  Invalid file type. only png, jpg, and jpeg format
+                  allowed
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
+
           <div className="col">
             <div className="form">
               <Inputfield
@@ -163,14 +223,9 @@ const Add_item = () => {
               />
               {/* <label className="error">{errors.price?.message}</label> */}
               <h5>Status :</h5>
-              {/* <button className="button-status">
-                                Select Status
-                                <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
-                            </button> */}
-              {/* <input className="button-status" type="text" placeholder="available" name="status" onChange={handleChange} id="" readOnly /> */}
-              <select className="button-status" onChange={handleShowImage} name="id" id="">
-                <option value="">Available</option>
-                <option value="">Booked</option>
+              <select name="status" className="button-status" onChange={handleChange}>
+                <option value="Available">Available</option>
+                <option value="Booked">Booked</option>
               </select>
               <h5>Stock :</h5>
               <input
@@ -181,7 +236,6 @@ const Add_item = () => {
                 id=""
                 onChange={handleChange}
               />
-              {/* <label className="error">{errors.stock?.message}</label> */}
             </div>
           </div>
         </div>
@@ -189,10 +243,6 @@ const Add_item = () => {
       <div className="container">
         <div className="row button-wrapper">
           <div className="col-lg-5 col-md-6 ">
-            {/* <button className="button-category">
-                            Add item to
-                            <i className="fa fa-angle-down fa-2x" aria-hidden="true"></i>
-                        </button> */}
             <select
               className="custom-select button-status"
               name="id"
@@ -219,6 +269,18 @@ const Add_item = () => {
 };
 
 export default Add_item;
+export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isAdmin = '';
+  if (role === 'admin') {
+    isAdmin = true;
+  }
+  return {
+    props: { token, isAdmin: isAdmin, },
+    
+  };
+});
 const Styles = styled.div`
   .back-wrapper {
     margin-bottom: 100px;

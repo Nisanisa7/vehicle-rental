@@ -5,6 +5,7 @@ import Navbar_Bf_Login from "../components/molecules/navbar_bf_login";
 import { Layout } from "../components/molecules/layout";
 import Link from "next/link";
 // import Footer from "../components/footer";
+import { PublicRoute } from '../Route/PublicRoute';
 import Image from "next/dist/client/image";
 export default function Home() {
   return (
@@ -80,7 +81,7 @@ export default function Home() {
         <div className="d-flex justify-content-between">
           <h1>Popular in town</h1>
           <Link href="">
-            <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a className="view">View all <i className="fa fa-chevron-right" aria-hidden="true"></i></a>
           </Link>
         </div>
       </div>
@@ -108,7 +109,7 @@ export default function Home() {
         <div className="d-flex justify-content-between">
           <h1>Testimonials</h1>
           <Link href="">
-            <a className="view">View all <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a className="view">View all <i className="fa fa-chevron-right" aria-hidden="true"></i></a>
           </Link>
         </div>
       </div>
@@ -138,45 +139,15 @@ export default function Home() {
         </div>
       </div>
     </div>
-      
-    
-      {/* <div className="container">
-        <h1 className="testimonial">Testimonials</h1>
-        <div className="testimoni-wrap">
-          <div className="left-section">
-              <div className="review-wrap">
-                 
-                   <img src="/star.png" alt="" />
-                   <img className="star" src="/star.png" alt="" />
-                     <img className="star" src="/star.png" alt="" />
-                   <img className="star" src="/star.png" alt="" />
-                   <img className="star" src="/star.png" alt="" />
-
-                <p className="quote">”It was the right decision to rent vehicle <br /> 
-                here, I spent less money and enjoy the <br />
-                trip. It was an amazing experience to <br />
-                have a ride for wildlife trip!”</p>
-                <div className="profile">
-                  <span className="name">Edward Newgate <br /></span>
-                  <span className="job">Founder Circle</span>
-                </div>
-              </div>
-          </div>
-          <div className="right-section">
-            <div className="image-wrapper">
-              <div className="image-template">
-                <Image src="/image 6.png" className="image" width="400px" height="500px"/>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-       */}
-      {/* <Footer className="footer" /> */}
+  
     </Styles>
   );
 }
+export const getServerSideProps = PublicRoute(async (ctx) => {
+  return {
+    props: {},
+  };
+});
 const Styles = styled.div`
   .banner {
     height: 50%;

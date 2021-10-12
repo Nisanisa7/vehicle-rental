@@ -1,9 +1,8 @@
 import React from 'react'
-import { Children } from 'react'
 import styled from 'styled-components'
-import { colors } from '../utils/colors'
 
-export const Button = ({children, className, color, type, onClick, }) => {
+
+const Button = ({children, className, color, type, onClick, }) => {
    
     return (
         <Styles 
@@ -19,6 +18,7 @@ export const Button = ({children, className, color, type, onClick, }) => {
         </Styles>
     )
 }
+export default Button
 const Styles = styled.div`
 .button{
     width: 100%;

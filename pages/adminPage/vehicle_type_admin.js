@@ -6,13 +6,14 @@ import Card_Item from "../../components/card_item";
 import Card_ItemAdmin from "../../components/card_itemAdmin";
 import { Layout } from "../../components/molecules/layout";
 import NavbarAdmin from "../../components/molecules/navbar_admin";
-
+import { PrivateRouteAdmin } from "../../Route/PrivateRouteAdmin";
+import cookies from 'next-cookies';
 
 const Vehicle_type_admin = () => {
   const [category, setCategory] = useState([])
   const [search, setSearch] = useState("")
   useEffect(() => {
-      axios.get("http://localhost:4000/v1/vehicle")
+      axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
         .then((data)=>{
           setCategory(data.data.item)
         })
@@ -88,6 +89,18 @@ const Vehicle_type_admin = () => {
 };
 
 export default Vehicle_type_admin;
+export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+  const token = await cookies(ctx).token;
+  const role = await cookies(ctx).user_role;
+  let isAdmin = '';
+  if (role === 'admin') {
+    isAdmin = true;
+  }
+  return {
+    props: { token,   isAdmin: isAdmin, },
+  
+  };
+});
 const Styles = styled.div`
   .search {
     position: relative;
