@@ -12,7 +12,7 @@ const View_more = () => {
     useEffect(async () => {
        const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`);
       setVehicle(result.data)
-    }, [])
+    }, [vehicle])
   return (
     <Styles>
       <div className="container navbar">
@@ -28,7 +28,7 @@ const View_more = () => {
           <p>Click item to see details and reservation</p>
         </div>
       </div>
-        {vehicle.map(item=>(
+        {/* {vehicle.map(item=>(
       <div className="container">
         <div className="row-cols-5">
 
@@ -42,24 +42,24 @@ const View_more = () => {
           </div>
         </div>
       </div>
-        ))}
+        ))} */}
     </Styles>
   );
 };
 
 export default View_more;
-export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
-  const token = await cookies(ctx).token;
-  const role = await cookies(ctx).user_role;
-  let isAdmin = '';
-  if (role === 'admin') {
-    isAdmin = true;
-  }
-  return {
-    props: { token },
-    isAdmin: isAdmin,
-  };
-});
+// export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
+//   const token = await cookies(ctx).token;
+//   const role = await cookies(ctx).user_role;
+//   let isAdmin = '';
+//   if (role === 'admin') {
+//     isAdmin = true;
+//   }
+//   return {
+//     props: { token,   isAdmin: isAdmin, },
+  
+//   };
+// });
 
 const Styles = styled.div`
   .navbar {

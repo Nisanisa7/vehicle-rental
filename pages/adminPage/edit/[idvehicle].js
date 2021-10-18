@@ -112,7 +112,7 @@ const EditItem = ({detail}) => {
       });
   };
   const handleBack = () =>{
-    router.push(`/adminPage/detail/${idvahicle}`)
+    router.push(`/adminPage/vehicle_type_admin`)
   }
   return (
     <Styles>

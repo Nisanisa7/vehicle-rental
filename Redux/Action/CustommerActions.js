@@ -17,14 +17,14 @@ export const LoginCust = (data, router) => (dispatch) => {
       const token = res.data.data.token;
       const createdAt = res.data.data.createdAt;
 
-      if (status === "inactive") {
-        Swal.fire({
-          icon: "error",
-          title: "Boo Boo",
-          text: "Please activate your account first!",
-        });
-        return;
-      }
+      // if (status === "inactive") {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Boo Boo",
+      //     text: "Please activate your account first!",
+      //   });
+      //   return;
+      // }
       const resultLogin = res.data.data;
       localStorage.setItem("token", token);
       localStorage.setItem("status", status);
