@@ -7,7 +7,7 @@ import Footer from "../../components/molecules/footer";
 import axios from "axios";
 import { Layout } from "../../components/molecules/layout";
 import { PrivateRoute } from "../../Route/PrivateRoute";
-import cookies from 'next-cookies';
+import cookies from "next-cookies";
 const Vehicle_type = () => {
   const [category, setCategory] = useState([]);
   const [search, setSearch] = useState("");
@@ -84,14 +84,10 @@ const Vehicle_type = () => {
                   </div>
                 </>
               ))}
-
-            {/* <Card_Item src="/orang ngetrek.png" className="card" location="Teluk Bogam" city="Kalimantan"></Card_Item>
-                    <Card_Item src="/ceue naik mobil.png" className="card" location="Bromo" city="Malang"></Card_Item>
-                    <Card_Item src="/boncengan.png" className="card" location="Malioboro" city="Yogyakarya"></Card_Item> */}
           </div>
         </div>
       </div>
-      {/* <Footer className="footer"/> */}
+      <Footer className="footer" />
     </Styles>
   );
 };
@@ -101,16 +97,16 @@ export const getServerSideProps = PrivateRoute(async (ctx) => {
   try {
     const token = await cookies(ctx).token;
     const role = await cookies(ctx).user_role;
-    let isCustommer = '';
-    if (role === 'custommer') {
+    let isCustommer = "";
+    if (role === "custommer") {
       isCustommer = true;
     }
-    return{
+    return {
       props: {
         role: role,
         token: token,
         isCustommer: isCustommer,
-      }
+      },
     };
   } catch (error) {
     console.log(error);

@@ -1,13 +1,23 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import * as Types from "../types";
-
+import cookies from 'next-cookies'
 export const AdminLogin = (data, router) => (dispatch) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`, data, {
         withCredentials: true,
       })
       .then((res) => {
+        // res.setHeader("Access-Control-Allow-Headers","*")
+        // res.setHeader('Access-Control-Allow-Credentials', true);
+        // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        // res.setHeader('Set-Cookie', cookie.serialize('token', result.token,{
+        //   httpOnlu: true,
+        //   secure: true,
+        //   sameSite: 'strict',
+        //   maxAge: 7200000,
+        //   path: '/'
+        // }))
         const isAuth = true;
         const status = res.data.data.status;
         const email = res.data.data.email;

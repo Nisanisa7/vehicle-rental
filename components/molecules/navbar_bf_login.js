@@ -53,9 +53,11 @@ const Navbar_Bf_Login = () => {
               </Link>
             </li>
             <li>
-              <a href="">
+            <Link href="/auth_user/register">
+              <a>
                 <input type="submit" className="btn-sign" value="Sign up" />
               </a>
+              </Link>
             </li>
           </ul>
         </nav>
