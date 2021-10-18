@@ -9,10 +9,10 @@ import { PrivateRouteAdmin } from "../../Route/PrivateRoute";
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
     const [search, setSearch] = useState("")
-    useEffect(async() => {
-      const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
+    useEffect(() => {
+      async const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
       setVehicle(result.data)
-    }, [vehicle])
+    }, [])
   return (
     <Styles>
       <div className="container navbar">

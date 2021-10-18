@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React, { useState } from "react";
 import styled from "styled-components";
 import  Button from "../../components/atoms/button";
 import  TransparantField from "../../components/atoms/transparantField";
@@ -20,8 +19,8 @@ const LoginAdmin = () => {
   };
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     onSubmit: (values) => {
       // console.log(values);

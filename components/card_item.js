@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Card_Item = (props) => {
   return (
-    <Styles className={props.className} key={props.key}>
+    <Styles className={props.className}>
       <Link href={`/product_page/detail/${props.id}`}>
         <a>
           <div className="image-wrap">
@@ -12,7 +12,7 @@ const Card_Item = (props) => {
           </div>
         </a>
       </Link>
-      <div className="card-small">
+      <div className="card-small" key={props.key}>
         <div className="location">{props.location}</div>
         <div className="city">{props.city}</div>
       </div>
