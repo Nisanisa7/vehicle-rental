@@ -32,7 +32,7 @@ const View_more = () => {
       <div className="container">
         <div className="row-cols-5">
 
-          <div className="col-sm-12 col-md-6 col-lg-3" key={item.idvehicle}>
+          <div key={item.idvehicle} className="col-sm-12 col-md-6 col-lg-3" >
             <Card_Item
               src={item.image}
               className="card"
