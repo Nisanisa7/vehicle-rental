@@ -103,7 +103,6 @@ const Add_item = () => {
         router.push("/adminPage/homeAfterLogin");
       })
       .catch((err) => {
-        console.log(err.message, 'consoleerror');
         if (err.response) {
           Swal.fire({
             icon: "error",
@@ -171,7 +170,7 @@ const Add_item = () => {
               </div>
               {empty ? (
                 <p className="error">
-                  Image Can't be empty
+                  Image Can&apos;t be empty
                 </p>
               ) : (
                 ""
@@ -272,8 +271,8 @@ export default Add_item;
 export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
   const token = await cookies(ctx).token;
   const role = await cookies(ctx).user_role;
-  let isAdmin = '';
-  if (role === 'admin') {
+  let isAdmin = "";
+  if (role === "admin") {
     isAdmin = true;
   }
   return {

@@ -43,7 +43,7 @@ const Login = () => {
                 {/* <div className="inside-wrapper"> */}
 
                 <h3 className="title">
-                  Le'ts Explore <br /> The World
+                  Le&apos;ts Explore <br /> The World
                 </h3>
                 <p>Dont have an account?</p>
                 <Button
