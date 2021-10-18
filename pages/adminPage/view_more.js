@@ -9,8 +9,8 @@ import { PrivateRouteAdmin } from "../../Route/PrivateRoute";
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
     const [search, setSearch] = useState("")
-    useEffect(() => {
-      async const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
+    useEffect(async () => {
+       const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`);
       setVehicle(result.data)
     }, [])
   return (
@@ -34,7 +34,7 @@ const View_more = () => {
 
           <div className="col-sm-12 col-md-6 col-lg-3">
             <Card_Item
-              key={item.idVehicle}
+              id={item.idvehicle}
               src={item.image}
               className="card"
               location={item.vehicle_name}

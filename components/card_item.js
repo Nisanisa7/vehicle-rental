@@ -12,7 +12,7 @@ const Card_Item = (props) => {
           </div>
         </a>
       </Link>
-      <div className="card-small" key={props.key}>
+      <div className="card-small">
         <div className="location">{props.location}</div>
         <div className="city">{props.city}</div>
       </div>

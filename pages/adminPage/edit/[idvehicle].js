@@ -12,7 +12,7 @@ import { PrivateRouteAdmin } from "../../../Route/PrivateRouteAdmin";
 const EditItem = ({detail}) => {
   const router = useRouter();
   const { query } = useRouter();
-  const idvahicle = Number(query.idVehicle);
+  const idvahicle = Number(query.idvehicle);
   const [errSize, setErrSize] = useState(false);
   const [errType, setErrType] = useState(false);
   console.log(idvahicle);
