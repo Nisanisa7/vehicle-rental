@@ -12,7 +12,7 @@ const View_more = () => {
     useEffect(async() => {
       const result = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle`)
       setVehicle(result.data)
-    }, [])
+    }, [vehicle])
   return (
     <Styles>
       <div className="container navbar">
@@ -34,6 +34,7 @@ const View_more = () => {
 
           <div className="col-sm-12 col-md-6 col-lg-3">
             <Card_Item
+              key={item.idVehicle}
               src={item.image}
               className="card"
               location={item.vehicle_name}

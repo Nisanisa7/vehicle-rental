@@ -26,12 +26,8 @@ const Register = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("name is required"),
-      email: Yup.string()
-        .required("Email is required")
-        .email("Email is invalid"),
-      password: Yup.string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters"),
+      email: Yup.string().required("Email is required").email("Email is invalid"),
+      password: Yup.string().required("Password is required").min(8, "Password must be at least 8 characters"),
     }),
   });
 
@@ -51,7 +47,6 @@ const Register = () => {
                 <h1 className="title">Sign Up</h1>
                 <form onSubmit={formik.handleSubmit}>
                   <input
-                    type="text"
                     type="text"
                     placeholder="Name"
                     name="name"

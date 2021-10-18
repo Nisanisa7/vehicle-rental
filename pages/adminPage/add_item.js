@@ -250,7 +250,7 @@ const Add_item = () => {
               onChange={handleChange}
             >
               {items.map((item) => (
-                <option value={item.id}>{item.name}</option>
+                <option key={item.id} value={item.id}>{item.name}</option>
               ))}
             </select>
             {/* <p className="error">{errors.id?.message}</p> */}

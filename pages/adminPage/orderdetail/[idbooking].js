@@ -222,7 +222,7 @@ const Styles = styled.div`
             font-size: 28px;
             color: #9B0A0A;
             }
-            input[readonly] {
+            input[readOnly] {
                 border-style: dotted;
                 cursor: not-allowed;
 

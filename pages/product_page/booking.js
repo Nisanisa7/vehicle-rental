@@ -67,7 +67,7 @@ const Booking = () => {
                     <h1 className="title-name">{bookData.vehicle_name}</h1>
                     <h3 className="town-title">{bookData.location}</h3>
                 
-                <input type="hidden" readonly name="" value={code} id="" />
+                <input type="hidden" readOnly name="" value={code} id="" />
                 <span className="code">#{code}</span>
                 <button className="btn-copy" onClick={copyToClipboard}>Copy booking code</button>
     
@@ -232,7 +232,7 @@ const Styles = styled.div`
             font-size: 28px;
             color: #9B0A0A;
             }
-            input[readonly] {
+            input[readOnly] {
                 border-style: dotted;
                 cursor: not-allowed;
 

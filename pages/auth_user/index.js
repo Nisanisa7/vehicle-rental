@@ -27,9 +27,7 @@ const Login = () => {
       dispatch(LoginCust(values, router));
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Email is Invalid")
-        .required("email is required"),
+      email: Yup.string().email("Email is Invalid").required("email is required"),
       password: Yup.string().required("Password is required"),
     }),
   });
