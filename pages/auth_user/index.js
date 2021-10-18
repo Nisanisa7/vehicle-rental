@@ -8,7 +8,7 @@ import { Layout } from "../../components/molecules/layout";
 import { useRouter } from "next/dist/client/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {LoginCust} from '../../Redux/Action/CustommerActions';
+import {LoginCust} from "../../Redux/Action/CustommerActions";
 import { useDispatch } from "react-redux";
 import { PublicRoute } from "../../Route/PublicRoute";
 const Login = () => {

@@ -6,7 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/dist/client/router";
 import NavbarAdmin from "../../components/molecules/navbar_admin";
-import cookies from 'next-cookies'
+import cookies from "next-cookies"
 import { PrivateRouteAdmin } from "../../Route/PrivateRouteAdmin";
 const Add_item = () => {
   const [empty, setEmpty] = useState(false)
