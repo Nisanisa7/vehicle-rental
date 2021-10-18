@@ -34,7 +34,7 @@ const View_more = () => {
 
           <div className="col-sm-12 col-md-6 col-lg-3">
             <Card_Item
-              id={item.idvehicle}
+              key={item.idvehicle}
               src={item.image}
               className="card"
               location={item.vehicle_name}

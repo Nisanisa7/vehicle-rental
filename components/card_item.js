@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Card_Item = (props) => {
   return (
     <Styles className={props.className}>
+      {props.key}
       <Link href={`/product_page/detail/${props.id}`}>
         <a>
           <div className="image-wrap">
