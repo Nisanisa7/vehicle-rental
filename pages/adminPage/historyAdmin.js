@@ -1,11 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import CardHistory from "../../components/cardHistory";
-import CardHistoryVehicle from "../../components/cardHistoryVehicle";
-import Cardwrapper from "../../components/cardWrapper";
+import styled from "styled-components"
+import Cardwrapper from "../../components/cardwrapper";
 import Card_Item from "../../components/card_item";
-import Checkbox from "../../components/checkbox";
 import Footer from "../../components/molecules/footer";
 import cookies from 'next-cookies';
 import { PrivateRouteAdmin } from '../../Route/PrivateRouteAdmin';

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardHistory from "../../components/cardHistory";
 import CardHistoryVehicle from "../../components/cardHistoryVehicle";
-import Cardwrapper from "../../components/cardWrapper";
+import Cardwrapper from "../../components/cardwrapper";
 import Card_Item from "../../components/card_item";
 import Checkbox from "../../components/checkbox";
 import Footer from "../../components/molecules/footer";

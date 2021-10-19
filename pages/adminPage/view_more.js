@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import Card_Item from "../../components/card_item";
 import NavbarAdmin from "../../components/molecules/navbar_admin";
-import cookies from 'next-cookies';
-import { PrivateRouteAdmin } from "../../Route/PrivateRoute";
+
 
 const View_more = () => {
     const [vehicle, setVehicle] = useState ([])
