@@ -4,7 +4,7 @@ import * as Types from "../types";
 import cookies from 'next-cookies'
 export const AdminLogin = (data, router) => (dispatch) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`, data, {
+      .post(`https://vehicle-rental-omega.vercel.app/api/LoginAdminAPI`, data, {
         withCredentials: true,
       })
       .then((res) => {
