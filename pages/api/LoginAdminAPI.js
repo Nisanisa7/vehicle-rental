@@ -6,7 +6,7 @@ const LoginAdminAPI = (req, res) => {
   if (req.method === "POST") {
     const { email, password } = req.body;
     axios
-      .get(
+      .post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`,
         (email, password)
       )
