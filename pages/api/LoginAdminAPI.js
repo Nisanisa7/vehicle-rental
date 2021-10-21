@@ -1,6 +1,5 @@
 import axios from "axios";
-import React from "react";
-import coookie from "cookie";
+import cookie from "cookie";
 
 const LoginAdminAPI = (req, res) => {
   if (req.method === "POST") {
@@ -27,7 +26,10 @@ const LoginAdminAPI = (req, res) => {
           );
           res.status(200)
           res.json({data:result})
-      });
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }
 };
 
