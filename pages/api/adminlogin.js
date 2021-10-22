@@ -1,7 +1,7 @@
 import axios from "axios";
 import cookie from "cookie";
 
-const LoginAdminAPI = (req, res) => {
+const AdminLogin = (req, res) => {
   if (req.method === "POST") {
     const { email, password } = req.body;
     axios
@@ -9,28 +9,24 @@ const LoginAdminAPI = (req, res) => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`,
         (email, password)
       )
-      .then((res) => {
-        const result = res.data.data;
+      .then((response) => {
+        const result = response.data.data;
         res.setHeader("Access-Control-Allow-Headers", "*");
         res.setHeader("Access-Control-Allow-Credentials", true);
-        res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+        res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
         res.setHeader(
           "Set-Cookie",
           cookie.serialize("token", result.token, {
-            httpOnlu: true,
+            httpOnly: true,
             secure: true,
             sameSite: "strict",
             maxAge: 7200000,
             path: "/",
-          })
-          );
+          }));
           res.status(200)
           res.json({data:result})
-      })
-      .catch((err)=>{
-        console.log(err);
       })
   }
 };
 
-export default LoginAdminAPI;
+export default AdminLogin;
