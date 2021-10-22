@@ -29,7 +29,6 @@ const AdminLogin = (req, res) => {
             cookie.serialize("user_isAuth", true, {
               httpOnly: true,
               secure: true,
-              sameSite: "strict",
               maxAge: 1000*62*12,
               path: "/",
             }));
@@ -38,7 +37,6 @@ const AdminLogin = (req, res) => {
               cookie.serialize("user_role", result.role, {
                 httpOnly: true,
                 secure: true,
-                sameSite: "strict",
                 maxAge: 1000*62*12,
                 path: "/",
               }));
@@ -47,7 +45,7 @@ const AdminLogin = (req, res) => {
                 cookie.serialize("user_idAdmin", result.idAdmin, {
                   httpOnly: true,
                   secure: true,
-                  sameSite: "strict",
+  
                   maxAge: 1000*62*12,
                   path: "/",
                 }));
