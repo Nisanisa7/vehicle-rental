@@ -17,38 +17,49 @@ const AdminLogin = (req, res) => {
         res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
         res.setHeader(
           "Set-Cookie",
-          cookie.serialize("token", result.token, {
+          [cookie.serialize("token", result.token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 1000*62*12,
+            path: "/", 
+          }),
+          [cookie.serialize("user_isAuth", true, {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
             maxAge: 1000*62*12,
             path: "/",
-          }));
-          res.setHeader(
-            "Set-Cookie",
-            cookie.serialize("user_isAuth", true, {
-              httpOnly: true,
-              secure: true,
-              maxAge: 1000*62*12,
-              path: "/",
-            }));
-            res.setHeader(
-              "Set-Cookie",
-              cookie.serialize("user_role", result.role, {
-                httpOnly: true,
-                secure: true,
-                maxAge: 1000*62*12,
-                path: "/",
-              }));
-            res.setHeader(
-                "Set-Cookie",
-                cookie.serialize("user_idAdmin", result.idAdmin, {
-                  httpOnly: true,
-                  secure: true,
-  
-                  maxAge: 1000*62*12,
-                  path: "/",
-                }));
+          })],  
+        
+        ] )
+          // res.setHeader(
+          //   "Set-Cookie",
+          //   cookie.serialize("user_isAuth", true, {
+          //     httpOnly: true,
+          //     secure: true,
+          //     sameSite: "strict",
+          //     maxAge: 1000*62*12,
+          //     path: "/",
+          //   }));
+          //   res.setHeader(
+          //     "Set-Cookie",
+          //     cookie.serialize("user_role", result.role, {
+          //       httpOnly: true,
+          //       secure: true,
+          //       sameSite: "strict",
+          //       maxAge: 1000*62*12,
+          //       path: "/",
+          //     }));
+          //   res.setHeader(
+          //       "Set-Cookie",
+          //       cookie.serialize("user_idAdmin", result.idAdmin, {
+          //         httpOnly: true,
+          //         secure: true,
+          //         sameSite: "strict",
+          //         maxAge: 1000*62*12,
+          //         path: "/",
+          //       }));
           res.status(200)
           res.json({data:result})
       })
