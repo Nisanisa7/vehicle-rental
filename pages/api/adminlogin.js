@@ -20,7 +20,7 @@ const AdminLogin = (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
-            maxAge: 7200000,
+            maxAge: 1000*62*12,
             path: "/",
           }));
           res.status(200)
