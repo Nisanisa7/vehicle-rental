@@ -7,7 +7,7 @@ const AdminLogin = (req, res) => {
     axios
       .post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`,
-        (email, password)
+        {email, password}
       )
       .then((response) => {
         const result = response.data.data;
