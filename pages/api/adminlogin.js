@@ -11,7 +11,6 @@ const AdminLogin = (req, res) => {
       )
       .then((response) => {
         const result = response.data.data;
-        console.log(result, 'result login api frontend');
         res.setHeader("Access-Control-Allow-Headers", "*");
         res.setHeader("Access-Control-Allow-Credentials", true);
         res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
@@ -63,7 +62,10 @@ const AdminLogin = (req, res) => {
           res.status(200)
           res.json({data:result})
       })
-   
+      .catch((error)=>{
+        res.status(error.response.status)
+        res.json({data: null, error: {message: error.response.data.error.message}})
+      })
   }
 };
 
