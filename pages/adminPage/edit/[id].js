@@ -12,7 +12,7 @@ import { PrivateRouteAdmin } from "../../../Route/PrivateRouteAdmin";
 const EditItem = ({detail}) => {
   const router = useRouter();
   const { query } = useRouter();
-  const idvahicle = Number(query.idvehicle);
+  const idvahicle = Number(query.id);
   const [errSize, setErrSize] = useState(false);
   const [errType, setErrType] = useState(false);
   console.log(idvahicle);
@@ -274,14 +274,14 @@ const EditItem = ({detail}) => {
   );
 };
 export const getServerSideProps = PrivateRouteAdmin(async (ctx) => {
-  const { idVehicle } = ctx.query;
+  const { id } = ctx.query;
   const token = await cookies(ctx).token;
   const role = await cookies(ctx).user_role;
   let isAdmin = '';
   if (role === 'admin') {
     isAdmin = true;
   }
-  const  result  = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idVehicle}`);
+  const  result  = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${id}`);
   const [detail] = result.data.data
   return {
     props: { token,  isAdmin: isAdmin, detail},
