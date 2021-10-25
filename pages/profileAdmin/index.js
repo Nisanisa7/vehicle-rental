@@ -46,7 +46,8 @@ const ProfileAdmin = () => {
         localStorage.clear();
         window.location.href = "/";
         dispatch({ type: "REMOVE_STATE", payload: {} });
-        Swal.fire("Success", "you're logged out ! see ya", "success");
+        alert("you're logged out ! see ya");
+        // alert("Success", "you're logged out ! see ya", "success");
         router.push("/");
       })
       .res((err) => {
