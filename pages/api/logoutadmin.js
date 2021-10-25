@@ -33,7 +33,8 @@ const Logoutadmin = (req, res) => {
       res.json({message:'logout success'})
     }
   } catch (error) {
-    res.status(error.response.status)
+    console.log(error);
+    res.status(500)
     res.json({data: null, error: "error logout"})
   }
  
