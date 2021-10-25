@@ -1,5 +1,6 @@
-
-const login = () => {
+import axios from "axios";
+import cookie from "cookie";
+const Login = () => {
     if (req.method === "POST") {
         const { email, password } = req.body;
         axios
@@ -48,4 +49,4 @@ const login = () => {
       }
 }
 
-export default login
+export default Login
