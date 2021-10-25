@@ -22,22 +22,22 @@ const AdminLogin = (req, res) => {
             sameSite: "strict",
             maxAge: 1000*62*12,
             path: "/", 
-          })],
-          [cookie.serialize("user_isAuth", true, {
+          }),
+          cookie.serialize("user_isAuth", true, {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
             maxAge: 1000*62*12,
             path: "/",
-          })],  
-          [
+          }),  
             cookie.serialize("user_idAdmin", result.idAdmin, {
                httpOnly: true,
                secure: true,
                sameSite: "strict",
                maxAge: 1000*62*12,
                path: "/",
-             })],    
+             }),       
+          ]
          )
           res.status(200)
           res.json({data:result})
