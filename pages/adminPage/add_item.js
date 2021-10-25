@@ -77,6 +77,7 @@ const Add_item = () => {
   };
   const handleChange = (e) => {
     console.log(e.target.value);
+    console.log(e.target.name);
     setForm({
       ...form,
       [e.target.name]: e.target.value,
