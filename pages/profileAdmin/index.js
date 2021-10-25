@@ -50,7 +50,7 @@ const ProfileAdmin = () => {
         // alert("Success", "you're logged out ! see ya", "success");
         router.push("/");
       })
-      .res((err) => {
+      .catch((err) => {
         console.log(err);
       });
   };
