@@ -1,7 +1,7 @@
 
 const Logoutadmin = (req, res) => {
   try {
-    if (req.method === "GET") {
+    if (req.method === "POST") {
       res.setHeader("Access-Control-Allow-Headers", "*");
       res.setHeader("Access-Control-Allow-Credentials", true);
       res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");

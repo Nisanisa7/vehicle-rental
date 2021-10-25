@@ -39,7 +39,7 @@ const ProfileAdmin = () => {
 
   const handleLogout = () => {
     axios
-      .get(`https://vehicle-rental-omega.vercel.app/api/logoutadmin`, {
+      .post(`https://vehicle-rental-omega.vercel.app/api/logoutadmin`, {} , {
         withCredentials: true,
       })
       .then((res) => {
