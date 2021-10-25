@@ -293,15 +293,16 @@ const ProfileAdmin = () => {
                 <button className="btn-password">Edit Password</button>
               </div>
               <div className="col col-md-4">
-                <button className="btn-cancel" type="button" onClick={handleLogout}>
-                  Logout
-                </button>
+               
               </div>
             </div>
           </div>
           {/* <div className="button-group">
             </div> */}
         </form>
+        <button className="btn-cancel" type="button" onClick={handleLogout}>
+                  Logout
+                </button>
       </div>
       <Footer className="footer" />
     </Styles>
