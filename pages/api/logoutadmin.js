@@ -7,21 +7,21 @@ const Logoutadmin = (req, res) => {
       res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
       res.setHeader(
         "Set-Cookie",
-        [cookie.serialize("token", result.token, {
+        [cookie.serialize("token", '', {
           httpOnly: true,
           secure: true,
           sameSite: "strict",
           maxAge: -1,
           path: "/", 
         }),
-        cookie.serialize("user_isAuth", true, {
+        cookie.serialize("user_isAuth", '', {
           httpOnly: true,
           secure: true,
           sameSite: "strict",
           maxAge: -1,
           path: "/",
         }),  
-          cookie.serialize("user_idAdmin", result.idAdmin, {
+          cookie.serialize("user_idAdmin", '', {
              httpOnly: true,
              secure: true,
              sameSite: "strict",
