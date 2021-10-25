@@ -1,6 +1,6 @@
 import axios from "axios";
 import cookie from "cookie";
-const Login = () => {
+const Login = (req, res) => {
     if (req.method === "POST") {
         const { email, password } = req.body;
         axios
@@ -13,7 +13,7 @@ const Login = () => {
             res.setHeader("Access-Control-Allow-Headers", "*");
             res.setHeader("Access-Control-Allow-Credentials", true);
             res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
-            es.setHeader(
+            res.setHeader(
               "Set-Cookie",
               [cookie.serialize("token", result.token, {
                 httpOnly: true,
