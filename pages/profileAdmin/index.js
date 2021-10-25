@@ -39,7 +39,7 @@ const ProfileAdmin = () => {
 
   const handleLogout = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/authcust/logout`, {
+      .get(`https://vehicle-rental-omega.vercel.app/api/logoutadmin`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -103,7 +103,6 @@ const ProfileAdmin = () => {
             profile: dataResponse,
           };
           console.log(dataResponse);
-          localStorage.setItem("name", dataResponse.name);
           localStorage.setItem("address", dataResponse.address);
           localStorage.setItem("datebirth", dataResponse.datebirth);
           localStorage.setItem("gender", dataResponse.gender);
