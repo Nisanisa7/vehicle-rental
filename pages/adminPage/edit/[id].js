@@ -81,7 +81,7 @@ const EditItem = ({detail}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idvahicle}`, formData)
+      .patch(`${process.env.NEXT_PUBLIC_BASE_URL}/vehicle/${idvahicle}`, formData)
       .then((res) => {
         console.log(res);
         Swal.fire("Success!", "Data has been Updated!", "success");
