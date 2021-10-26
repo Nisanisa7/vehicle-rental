@@ -20,6 +20,7 @@ const Profile = ({ custommer }) => {
   const Profile = useSelector((state) => state.custommer.profile);
   const DateJoined = localStorage.getItem('createdAt')
   const id = localStorage.getItem('idCustommer')
+  const name = localStorage.getItem('name')
   let DateObj = new Date(DateJoined);
   let Year = DateObj.getFullYear();
   let Day = ("0" + DateObj.getDate()).slice(-2);
@@ -82,7 +83,7 @@ const Profile = ({ custommer }) => {
   return (
     <Styles>
       <Head>
-        <title>Profile | {Profile.name}</title>
+        <title>Profile | {name}</title>
         <link rel="icon" href="/Footer-image.png" />
       </Head>
       <Navbar_after_login />
