@@ -12,10 +12,12 @@ export const LoginCust = (data, router) => (dispatch) => {
       const status = res.data.data.status;
       const role = res.data.data.role;
       const email = res.data.data.email;
+      const name = res.data.data.name;
       const idCustommer = res.data.data.idCustommer;
       const image = res.data.data.image;
       const token = res.data.data.token;
       const createdAt = res.data.data.createdAt;
+
 
       const resultLogin = res.data.data;
       localStorage.setItem("token", token);
@@ -23,6 +25,7 @@ export const LoginCust = (data, router) => (dispatch) => {
       localStorage.setItem("isAuth", isAuth);
       localStorage.setItem("role", role);
       localStorage.setItem("email", email);
+      localStorage.setItem("name", name);
       localStorage.setItem("idCustommer", idCustommer);
       localStorage.setItem("image", image);
       localStorage.setItem("createdAt", createdAt);
