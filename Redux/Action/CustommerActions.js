@@ -4,7 +4,7 @@ import * as Types from "../types";
 
 export const LoginCust = (data, router) => (dispatch) => {
   axios
-    .post(`https://vehicle-rental-omega.vercel.app/api/login`, data, {
+    .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authcust/login`, data, {
       withCredentials: true,
     })
     .then((res) => {

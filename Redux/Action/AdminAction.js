@@ -7,7 +7,7 @@ export const AdminLogin = (data, router) => (dispatch) => {
       // .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`, data, {
       //   withCredentials: true,
       // })
-      .post(`https://vehicle-rental-omega.vercel.app/api/adminlogin`, data, {
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/authadmin/login`, data, {
         withCredentials: true,
       })
       .then((res) => {
