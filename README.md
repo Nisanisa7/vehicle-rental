@@ -11,7 +11,7 @@
     <a href="https://github.com/Nisanisa7/vehicle-rental"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="vehicle-rental-omega.vercel.app">View Demo</a>
+    <a href="vehicle-rental-omega.vercel.ap">View Demo</a>
     ·
     <a href="https://github.com/Nisanisa7/vehicle-rental/issues">Report Bug</a>
     ·
