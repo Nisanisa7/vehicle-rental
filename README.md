@@ -11,7 +11,7 @@
     <a href="https://github.com/Nisanisa7/vehicle-rental"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="vehicle-rental-omega.vercel.ap">View Demo</a>
+    <a href="https://vehicle-rental-omega.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/Nisanisa7/vehicle-rental/issues">Report Bug</a>
     ·
@@ -86,23 +86,54 @@ npm run dev
 ## Screenshots
 
 <p align="center" float="left">
-<!--    <image src='./Screenshot/login.png' width=45%/>
-  <image src='./Screenshot/1.5 Login Seller.png' width=45%/> -->
-  <image src='./Screenshot/Login.png'width=45%/>
-  <image src='./Screenshot/Register.png' width=45%/>
-  <image src='./Screenshot/Home.png' width=45%/>
-  <image src='./Screenshot/Type-new.png'width=45%/>
-  <image src='./Screenshot/Detail.png' width=45%/>
-  <image src='./Screenshot/Reservation.png' width=45%/>
-  <image src='./Screenshot/Book2.png' width=45%/>
-  <image src='./Screenshot/success.png' width=45%/>
-  <image src='./Screenshot/History.png' width=45%/>
-  <image src='./Screenshot/Profile.png' width=45%/>
-   <image src='./Screenshot/Add item.png' width=45%/>
-<!--   <image src='./Screenshot/paymentmethod.png' width=45%/>
-  <image src='./Screenshot/order success.png' width=45%/>
-  <image src='./Screenshot/Userprofile.png' width=45%/>
-  <image src='./Screenshot/address page.png' width=45%/>  -->
+<table>
+    <tr>
+        <td>Login</td>
+        <td>Register</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/Login.png'width=100%/></td>
+        <td> <image src='./Screenshot/Register.png' width=100%/></td>
+    </tr>
+   <tr>
+        <td>Home Page</td>
+        <td>Vehicle Menu Page</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/Home.png' width=100%/></td>
+        <td><image src='./Screenshot/Type-new.png'width=100%/></td>
+    </tr>
+   <tr>
+        <td>Detail Vehicle Page</td>
+        <td>Reservation Page</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/Detail.png' width=100%/></td>
+        <td><image src='./Screenshot/Reservation.png' width=100%/></td>
+    </tr>
+        <td>Rental Confirmation Page</td>
+        <td>Success Rental Pop Up</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/Book2.png' width=100%/></td>
+        <td><image src='./Screenshot/success.png' width=100%/></td>
+    </tr>
+   <tr>
+        <td>History Page</td>
+        <td>User Profile Page</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/History.png' width=100%/></td>
+        <td><image src='./Screenshot/Profile.png' width=100%/></td>
+    </tr>
+   <tr>
+        <td>Add Vehicle Page</td>
+    </tr>
+  <tr>
+        <td><image src='./Screenshot/Add item.png' width=100%/></td>
+    </tr>
+</table>
+
 </p>
 
 ## Related Project
