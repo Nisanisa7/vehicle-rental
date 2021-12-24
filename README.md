@@ -127,7 +127,7 @@ npm run dev
         <td><image src='./Screenshot/Profile.png' width=100%/></td>
     </tr>
    <tr>
-        <td>Add Vehicle Page</td>
+        <td>Seller - Add Vehicle Page</td>
     </tr>
   <tr>
         <td><image src='./Screenshot/Add item.png' width=100%/></td>
